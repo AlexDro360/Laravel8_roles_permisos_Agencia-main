@@ -12,7 +12,7 @@
         <i class=" fas fa-user-lock"></i><span>Roles</span>
     </a>
     @endcan
-    @can('ver-grupo')
+    @can('ver-grupo)
     <a class="nav-link" href="/asignar">
         <i class=" fas fa-blog"></i><span>Asignar</span>
     </a>
