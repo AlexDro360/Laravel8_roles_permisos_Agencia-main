@@ -12,7 +12,7 @@
         <i class=" fas fa-user-lock"></i><span>Roles</span>
     </a>
     @endcan
-    @can('ver-grupo)
+    @can('ver-grupo')
     <a class="nav-link" href="/asignar">
         <i class=" fas fa-blog"></i><span>Asignar</span>
     </a>
@@ -20,6 +20,11 @@
     @can('ver-materia')
     <a class="nav-link" href="/materias">
         <i class=" fas fa-blog"></i><span>Materias</span>
+    </a>
+    @endcan
+    @can('ver-grupos')
+    <a class="nav-link" href="/grupos">
+        <i class=" fas fa-blog"></i><span>Grupos</span>
     </a>
     @endcan
 </li>

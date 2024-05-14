@@ -9,6 +9,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EscuelaController;
 use App\Http\Controllers\MateriasController;
 use App\Http\Controllers\ProfesoreController;
+use App\Http\Controllers\GrupoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,4 +40,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('escuelas', EscuelaController::class);
     Route::resource('materias', MateriasController::class);
     Route::resource('profesores', ProfesoreController::class);
+    Route::resource('grupos', GrupoController::class);
 });
