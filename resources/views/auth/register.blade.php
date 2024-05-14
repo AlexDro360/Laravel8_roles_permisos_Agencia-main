@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="card card-primary">
-        <div class="card-header"><h4>Register</h4></div>
+        <div class="card-header"><h4>Registrate</h4></div>
 
         <div class="card-body pt-1">
             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="first_name">Full Name:</label><span
+                            <label for="first_name">Nombre Completo:</label><span
                                     class="text-danger">*</span>
                             <input id="firstName" type="text"
                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password" class="control-label">Password
+                            <label for="password" class="control-label">Contraseña
                                 :</label><span
                                     class="text-danger">*</span>
                             <input id="password" type="password"
@@ -54,7 +54,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="password_confirmation"
-                                   class="control-label">Confirm Password:</label><span
+                                   class="control-label">Confirma Contraseña:</label><span
                                     class="text-danger">*</span>
                             <input id="password_confirmation" type="password" placeholder="Confirm account password"
                                    class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid': '' }}"

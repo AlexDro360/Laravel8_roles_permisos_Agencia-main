@@ -1,6 +1,6 @@
 <li class="side-menus {{ Request::is('*') ? 'active' : '' }}">
     <a class="nav-link" href="/home">
-        <i class=" fas fa-building"></i><span>Dashboard</span>
+        <i class=" fas fa-building"></i><span>Panel de Opciones</span>
     </a>
     @can('ver-usuario')
     <a class="nav-link" href="/usuarios">
@@ -14,7 +14,7 @@
     @endcan
     @can('ver-grupo')
     <a class="nav-link" href="/asignar">
-        <i class=" fas fa-blog"></i><span>Asignar</span>
+        <i class=" fas fa-vr-cardboard"></i><span>Asignar</span>
     </a>
     @endcan
     @can('ver-materia')

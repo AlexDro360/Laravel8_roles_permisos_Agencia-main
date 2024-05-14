@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="card card-primary">
-        <div class="card-header"><h4>Admin Login</h4></div>
+        <div class="card-header"><h4>Bienvenido</h4></div>
 
         <div class="card-body">
             <form method="POST" action="{{ route('login') }}">
@@ -32,10 +32,10 @@
 
                 <div class="form-group">
                     <div class="d-block">
-                        <label for="password" class="control-label">Password</label>
+                        <label for="password" class="control-label">Contraseña</label>
                         <div class="float-right">
                             <a href="{{ route('password.request') }}" class="text-small">
-                                Forgot Password?
+                                Olvidate tu contraseña?
                             </a>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="remember" class="custom-control-input" tabindex="3"
                                id="remember"{{ (Cookie::get('remember') !== null) ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="remember">Remember Me</label>
+                        <label class="custom-control-label" for="remember">Recuerdame</label>
                     </div>
                 </div>
 
