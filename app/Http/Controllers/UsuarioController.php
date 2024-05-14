@@ -22,7 +22,8 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {      
         //Sin paginación
-        $usuarios = User::all();
+        //$usuarios = User::all();
+        $usuarios = User::paginate(5);
         /* $usuarios = User::all();
         return view('usuarios.index',compact('usuarios')); */
 
@@ -55,6 +56,10 @@ class UsuarioController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'apellidoP' => 'required',
+            'apellidoM'=>'required',
+            'sexo'=>'required',
+            'numero_tarjeta'=>'required|max:16|min:16',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
@@ -107,6 +112,10 @@ class UsuarioController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'apellidoP' => 'required',
+            'apellidoM'=>'required',
+            'sexo'=>'required',
+            'numero_tarjeta'=>'required|max:16',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'

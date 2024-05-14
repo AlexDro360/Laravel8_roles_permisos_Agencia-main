@@ -53,6 +53,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-c-purple order-card">
+                                            <div class="card-block">
+                                            <h5>Profesores</h5>                                               
+                                                @php
+                                                 use App\Models\Profesore;
+                                                $cant_usuarios = User::count();                                                
+                                                @endphp
+                                                <h2 class="text-right"><i class="fa fa-users f-left"></i><span>{{$cant_usuarios}}</span></h2>
+                                                <p class="m-b-0 text-right"><a href="/usuarios" class="text-white">Ver más</a></p>
+                                            </div>                                            
+                                        </div>                                    
+                                    </div>
                                 </div>                        
                         </div>
                     </div>

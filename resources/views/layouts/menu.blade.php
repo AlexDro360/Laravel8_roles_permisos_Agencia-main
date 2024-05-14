@@ -12,22 +12,12 @@
         <i class=" fas fa-user-lock"></i><span>Roles</span>
     </a>
     @endcan
-    @can('ver-blog')
-    <a class="nav-link" href="/blogs">
-        <i class=" fas fa-blog"></i><span>Materias</span>
-    </a>
-    @endcan
-    @can('ver-escuela')
-    <a class="nav-link" href="/escuelas">
-        <i class=" fas fa-blog"></i><span>Maestros</span>
-    </a>
-    @endcan
-    @can('ver-asignar')
+    @can('ver-grupo')
     <a class="nav-link" href="/asignar">
         <i class=" fas fa-blog"></i><span>Asignar</span>
     </a>
     @endcan
-    @can('ver-materias')
+    @can('ver-materia')
     <a class="nav-link" href="/materias">
         <i class=" fas fa-blog"></i><span>Materias</span>
     </a>

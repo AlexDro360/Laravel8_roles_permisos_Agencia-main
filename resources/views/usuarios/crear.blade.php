@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Alta de Usuarios</h3>
+            <h3 class="page__heading">Agregar Usuario</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -29,6 +29,31 @@
                                 <div class="form-group">
                                     <label for="name">Nombre</label><span class="required text-danger">*</span>
                                     {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="apellidoP">Apellido Paterno</label><span class="required text-danger">*</span>
+                                    {!! Form::text('apellidoP', null, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="apellidoM">Apellido Materno</label><span class="required text-danger">*</span>
+                                    {!! Form::text('apellidoM', null, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">Sexo</label><span class="required text-danger">*</span>
+                                    {!! Form::select('sexo', $sexo=collect(['Masculino','Femenino','Otro']),[], array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="numero_tarjeta">Número de Tarjeta</label><span class="required text-danger">*</span>
+                                    {!! Form::text('numero_tarjeta', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
