@@ -25,8 +25,8 @@ class MateriasController extends Controller
         request()->validate([
             'nombre' => 'required',
             'clave' => 'required',
-            'creditos'=>'required',
-            'num_unidades'=>'required|min:1',
+            'creditos'=>'required|max:1',
+            'num_unidades'=>'required|max:1',
         ]);
 
         Materia::create($request->all());

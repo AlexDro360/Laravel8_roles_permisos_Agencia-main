@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Grupo extends Model
 {
     use HasFactory;
-    protected $fillable = ['clave', 'cupo', 'periodo', 'profesores_id', 'materias_id'];
+    protected $fillable = ['clave', 'cupo', 'periodo', 'users_id', 'materias_id'];
 }

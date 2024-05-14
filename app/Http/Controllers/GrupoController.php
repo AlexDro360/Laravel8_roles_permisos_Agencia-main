@@ -9,6 +9,12 @@ use App\Models\Horario;
 use App\Models\Dia;
 use App\Models\Profesore;
 use App\Models\Materia;
+use App\Models\User;
+
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 
 class GrupoController extends Controller
 {
@@ -17,7 +23,7 @@ class GrupoController extends Controller
         $grupos = Grupo::query()
         ->join('users','users.id','=','grupos.users_id')
         ->join('materias','materias.id','=','grupos.materias_id')
-        ->select('grupos.id as id','grupos.clave as clave','grupos.cupo as cupo','grupos.periodo as periodo','users.*','materias.nombre as nombreM')
+        ->select('grupos.id as id','grupos.clave as clave','grupos.cupo as cupo','grupos.periodo as periodo','users.name as nombre','users.apellidoP as apellidoP','users.apellidoM as apellidoM','materias.nombre as nombreM')
         ->get();
         $horarios=null;
         return view('grupos.index',compact('grupos'));
@@ -26,12 +32,12 @@ class GrupoController extends Controller
 
     public function store(Request $request)
     {
-           // $request ->dd();
+        //$request ->dd();
         request()->validate([
             'clave' => 'required',
-            'cupo' => 'required',
+            'cupo' => 'required|max:3',
             'periodo' => 'required',
-            'profesores_id' => 'required',
+            'users_id' => 'required',
             'materias_id' => 'required',
             'horaInicio'=>'required',
             'horaFin'=>'required',
@@ -46,10 +52,24 @@ class GrupoController extends Controller
         }
         return redirect()->route('grupos.index');
     }
+    
     public function create()
     {
+        $ids=collect();
+        $us = User::select('id')->get();
+        foreach($us as $u){
+            $user = User::find($u->id);
+            $roles = Role::pluck('name','name')->all();
+            $userRole = $user->roles->pluck('name','name')->all();
+            foreach($userRole as $ur){
+                if($ur == 'Profesor'){
+                    
+                    $ids->push($user->id);
+                }
+            }
+        }
+        $profesores = User::select(DB::raw('CONCAT(name," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->whereIn('id',$ids)->get()->pluck('nombreC','id');
         $dias = Dia::get();
-        $profesores = Profesore::select(DB::raw('CONCAT(nombre," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->get()->pluck('nombreC','id');
         $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->get()->pluck('nombre','id');
         return view('grupos.crear',compact('dias','materias','profesores'));
     }   
@@ -57,7 +77,20 @@ class GrupoController extends Controller
     public function edit(Grupo $grupo)
     {
         $dias = Dia::get();
-        $profesores = Profesore::select(DB::raw('CONCAT(nombre," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->get()->pluck('nombreC','id');
+        $ids=collect();
+        $us = User::select('id')->get();
+        foreach($us as $u){
+            $user = User::find($u->id);
+            $roles = Role::pluck('name','name')->all();
+            $userRole = $user->roles->pluck('name','name')->all();
+            foreach($userRole as $ur){
+                if($ur == 'Profesor'){
+                    
+                    $ids->push($user->id);
+                }
+            }
+        }
+        $profesores = User::select(DB::raw('CONCAT(name," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->whereIn('id',$ids)->get()->pluck('nombreC','id');
         $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->get()->pluck('nombre','id');
         $diasU = Horario::query()
             ->join('dias','dias.id','=','horarios.dias_id')

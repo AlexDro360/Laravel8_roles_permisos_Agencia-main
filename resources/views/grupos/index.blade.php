@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                        @can('crear-materia')
+                        @can('crear-grupo')
                         <a class="btn btn-warning" href="{{ route('grupos.create') }}">Nuevo</a>
                         @endcan
 
@@ -66,13 +66,13 @@
                                 </td>  
                                 <td>
                                     <form action="{{ route('grupos.destroy',$grupo->id) }}" method="POST">
-                                        {{-- @can('editar-blog') --}}
+                                        {{-- @can('editar-grupo') --}}
                                         <a class="btn btn-info" href="{{ route('grupos.edit',$grupo->id) }}">Editar</a>
                                         {{-- @endcan --}}
 
                                         @csrf
                                         @method('DELETE')
-                                        {{-- @can('borrar-blog') --}}
+                                        {{-- @can('borrar-grupo') --}}
                                         <button type="submit" class="btn btn-danger">Borrar</button>
                                         {{-- @endcan --}}
                                     </form>

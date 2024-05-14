@@ -49,7 +49,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="">Profesor</label><span class="required text-danger">*</span>
-                                    {!! Form::select('profesores_id', $profesores,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('users_id', $profesores,[], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
