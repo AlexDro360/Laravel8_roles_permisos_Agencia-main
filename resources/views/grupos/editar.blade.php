@@ -92,7 +92,10 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <a href="/grupos" class="btn btn-warning">Cancelar</a>
+                            </div>
                         </div>
                     </form>
 

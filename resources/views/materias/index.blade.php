@@ -22,9 +22,14 @@
                                     <th style="color:#fff;">Clave</th>
                                     <th style="color:#fff;">Creditos</th>
                                     <th style="color:#fff;">Unidades</th>
+                                    <th style="color:#fff;">Estado</th>
                                     <th style="color:#fff;">Acciones</th>
+                                    
                               </thead>
                               <tbody>
+                              @php
+                                use App\Models\Grupo;
+                            @endphp
                             @foreach ($materias as $materia)
                             <tr>
                                 <td style="display: none;">{{ $materia->id }}</td>
@@ -32,17 +37,26 @@
                                 <td>{{ $materia->clave }}</td>
                                 <td>{{ $materia->creditos }}</td>
                                 <td>{{ $materia->num_unidades }}</td>
+                                @if($materia->estado)
+                                <td>Activo</td>
+                                @else
+                                <td>Inactivo</td>
+                                @endif
                                 <td>
                                     <form action="{{ route('materias.destroy',$materia->id) }}" method="POST">
                                         {{-- @can('editar-materia') --}}
                                         <a class="btn btn-info" href="{{ route('materias.edit',$materia->id) }}">Editar</a>
                                         {{-- @endcan --}}
-
-                                        @csrf
-                                        @method('DELETE')
-                                        {{-- @can('borrar-materia') --}}
-                                        <button type="submit" class="btn btn-danger">Borrar</button>
-                                        {{-- @endcan --}}
+                                        @php
+                                        $hay = Grupo::where('materias_id','=',$materia->id)->count();
+                                        @endphp
+                                        @if($hay == 0)
+                                            @csrf
+                                            @method('DELETE')
+                                            {{-- @can('borrar-materia') --}}
+                                            <button type="submit" class="btn btn-danger">Borrar</button>
+                                            {{-- @endcan --}}
+                                        @endif
                                     </form>
                                 </td>
                             </tr>
@@ -79,6 +93,7 @@
         { Clave: 'Clave' },
         { Creditos: 'Creditos' },
         { Unidades: 'Num_unidades' },
+        { Estado: 'Estado' },
         { Acciones: 'Acciones' }
     ],
 

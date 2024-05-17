@@ -19,6 +19,7 @@ class CreateMateriasTable extends Migration
             $table->string('clave');
             $table->bigInteger('creditos');
             $table->bigInteger('num_unidades');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }

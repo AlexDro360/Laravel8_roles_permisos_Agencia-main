@@ -34,25 +34,39 @@
                                    <input type="text" name="nombre" class="form-control" value="{{ $materia->nombre }}">
                                 </div>
                             </div>
+
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                    <label for="clave">Clave</label>
                                    <input type="text" name="clave" class="form-control" value="{{ $materia->clave }}">
                                 </div>
                             </div>
+
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                    <label for="creditos">Creditos</label>
                                    <input type="text" name="creditos" class="form-control" value="{{ $materia->creditos }}">
                                 </div>
                             </div>
+
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                    <label for="num_unidades">Unidades</label>
                                    <input type="text" name="num_unidades" class="form-control" value="{{ $materia->num_unidades }}">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">Estado</label>
+                                    {!! Form::select('estado', $estado=collect([true => 'Activo', false => 'Inactivo']),$materia->estado, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <a href="/materias" class="btn btn-warning">Cancelar</a>
+                            </div>
                         </div>
                     </form>
 

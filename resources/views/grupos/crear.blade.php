@@ -28,20 +28,20 @@
                         <div class="row">
                             <div   div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="clave">Clave</label>
+                                   <label for="clave">Clave</label><span class="required text-danger">*</span>
                                    <input type="text" name="clave" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="cupo">Cupo</label>
+                                   <label for="cupo">Cupo</label><span class="required text-danger">*</span>
                                    <input type="text" name="cupo" class="form-control">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="periodo">Periodo</label>
+                                   <label for="periodo">Periodo</label><span class="required text-danger">*</span>
                                    <input type="text" name="periodo" class="form-control">
                                 </div>
                             </div>
@@ -62,13 +62,13 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="horaInicio">Hora Inicio</label>
+                                   <label for="horaInicio">Hora Inicio</label><span class="required text-danger">*</span>
                                    <input type="time" name="horaInicio" class="form-control">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="horaFin">Hora Fin</label>
+                                   <label for="horaFin">Hora Fin</label><span class="required text-danger">*</span>
                                    <input type="time" name="horaFin" class="form-control">
                                 </div>
                             </div>
@@ -84,7 +84,10 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <a href="/grupos" class="btn btn-warning">Cancelar</a>
+                            </div>
                         </div>
                     </form>
 

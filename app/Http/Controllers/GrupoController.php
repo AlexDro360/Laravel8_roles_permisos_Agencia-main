@@ -70,7 +70,7 @@ class GrupoController extends Controller
         }
         $profesores = User::select(DB::raw('CONCAT(name," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->whereIn('id',$ids)->get()->pluck('nombreC','id');
         $dias = Dia::get();
-        $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->get()->pluck('nombre','id');
+        $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->where('estado','=',true)->pluck('nombre','id');
         return view('grupos.crear',compact('dias','materias','profesores'));
     }   
 
@@ -91,7 +91,7 @@ class GrupoController extends Controller
             }
         }
         $profesores = User::select(DB::raw('CONCAT(name," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->whereIn('id',$ids)->get()->pluck('nombreC','id');
-        $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->get()->pluck('nombre','id');
+        $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->where('estado','=',true)->pluck('nombre','id');
         $diasU = Horario::query()
             ->join('dias','dias.id','=','horarios.dias_id')
             ->select('dias.nombre as nombre','horarios.horaInicio as horaInicio','horarios.horaFin as horaFin')

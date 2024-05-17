@@ -10,7 +10,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-
+                        <label class="text-danger">Los campos con * son obligatorios</label>
                         @if ($errors->any())
                             <div class="alert alert-dark alert-dismissible fade show" role="alert">
                             <strong>¡Revise los campos!</strong>
@@ -28,30 +28,40 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="nombre">Nombre</label>
+                                   <label for="nombre">Nombre</label><span class="required text-danger">*</span>
                                    <input type="text" name="nombre" class="form-control">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="clave">Clave</label>
+                                   <label for="clave">Clave</label><span class="required text-danger">*</span>
                                    <input type="text" name="clave" class="form-control">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="creditos">Creditos</label>
+                                   <label for="creditos">Creditos</label><span class="required text-danger">*</span>
                                    <input type="text" name="creditos" class="form-control">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                   <label for="num_unidades">Unidades</label>
+                                   <label for="num_unidades">Unidades</label><span class="required text-danger">*</span>
                                    <input type="text" name="num_unidades" class="form-control">
                                 </div>
                             </div>
+                            
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">Estado</label><span class="required text-danger">*</span>
+                                    {!! Form::select('estado', $estado=collect([true => 'Activo', false => 'Inactivo']),[], array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
 
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <a href="/materias" class="btn btn-warning">Cancelar</a>
+                            </div>
                         </div>
                     </form>
 

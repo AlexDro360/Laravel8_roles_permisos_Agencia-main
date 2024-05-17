@@ -27,6 +27,7 @@ class MateriasController extends Controller
             'clave' => 'required',
             'creditos'=>'required|max:1',
             'num_unidades'=>'required|max:1',
+            'estado'=>'required',
         ]);
 
         Materia::create($request->all());
@@ -45,7 +46,8 @@ class MateriasController extends Controller
             'nombre' => 'required',
             'clave' => 'required',
             'creditos'=>'required',
-            'num_unidades'=>'required'
+            'num_unidades'=>'required',
+            'estado'=>'required',
         ]);
 
         $materia->update($request->all());
