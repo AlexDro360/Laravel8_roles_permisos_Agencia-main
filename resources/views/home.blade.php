@@ -58,7 +58,7 @@
                                                 @php
                                                 $cant_grupos = Grupo::count();                                                
                                                 @endphp
-                                                <h2 class="text-right"><i class="fa fa-blog f-left"></i><span>{{$cant_grupos}}</span></h2>
+                                                <h2 class="text-right"><i class="fa fa-book-open f-left"></i><span>{{$cant_grupos}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/grupos" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
@@ -71,13 +71,13 @@
                                     @can('ver-grupo')                                                           
                                     
                                     <div class="col-md-4 col-xl-4">
-                                        <div class="card bg-c-pink order-card">
+                                        <div class="card bg-c-orange order-card">
                                             <div class="card-block">
                                                 <h5>Materias</h5>                                               
                                                 @php
                                                 $cant_grupos = Materia::count();                                                
                                                 @endphp
-                                                <h2 class="text-right"><i class="fa fa-blog f-left"></i><span>{{$cant_grupos}}</span></h2>
+                                                <h2 class="text-right"><i class="fa fa-bookmark f-left"></i><span>{{$cant_grupos}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/materias" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
@@ -90,13 +90,13 @@
                                     @can('mi-grupo')                                                           
                                     
                                     <div class="col-md-4 col-xl-4">
-                                        <div class="card bg-c-pink order-card">
+                                        <div class="card bg-c-purple order-card">
                                             <div class="card-block">
                                                 <h5>Mis Grupos</h5>                                               
                                                 @php
                                                 $cant_Migrupos = Grupo::count();                                                
                                                 @endphp
-                                                <h2 class="text-right"><i class="fa fa-blog f-left"></i><span>{{$cant_Migrupos}}</span></h2>
+                                                <h2 class="text-right"><i class="fa fa-book-reader f-left"></i><span>{{$cant_Migrupos}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/Mis-Grupos" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
