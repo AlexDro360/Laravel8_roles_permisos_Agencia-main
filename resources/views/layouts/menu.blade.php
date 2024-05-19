@@ -14,12 +14,17 @@
     @endcan
     @can('ver-materia')
     <a class="nav-link" href="/materias">
-        <i class=" fas fa-blog"></i><span>Materias</span>
+        <i class=" fas fa-bookmark"></i><span>Materias</span>
     </a>
     @endcan
     @can('ver-grupo')
     <a class="nav-link" href="/grupos">
-        <i class=" fas fa-blog"></i><span>Grupos</span>
+        <i class=" fas fa-book-open"></i><span>Grupos</span>
+    </a>
+    @endcan
+    @can('mi-grupo')
+    <a class="nav-link" href="/Mis-Grupos">
+        <i class=" fas fa-book-reader"></i><span>Mis Grupos</span>
     </a>
     @endcan
 </li>
