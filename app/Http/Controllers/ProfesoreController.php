@@ -22,11 +22,11 @@ class ProfesoreController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'nombre' => 'required',
-            'apellidoP' => 'required',
-            'apellidoM'=>'required',
+            'nombre' => 'required|alpha',
+            'apellidoP' => 'required|alpha',
+            'apellidoM'=>'required|alpha',
             'sexo'=>'required|max:1',
-            'numero_tarjeta'=>'required',
+            'numero_tarjeta'=>'required|alpha_num',
         ]);
 
         Profesore::create($request->all());

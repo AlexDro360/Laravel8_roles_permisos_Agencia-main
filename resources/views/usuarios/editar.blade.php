@@ -13,51 +13,60 @@
                         <label class="text-danger">Los campos con * son obligatorios</label>
                         @if ($errors->any())
                             <div class="alert alert-dark alert-dismissible fade show" role="alert">
-                            <strong>¡Revise los campos!</strong>
+                                <strong>¡Revise los campos!</strong>
                                 @foreach ($errors->all() as $error)
                                     <span class="badge badge-danger">{{ $error }}</span>
                                 @endforeach
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         @endif
 
                         {!! Form::model($user, ['method' => 'PATCH','route' => ['usuarios.update', $user->id]]) !!}
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Nombre</label><span class="required text-danger">*</span>
                                     {!! Form::text('name', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email">E-mail</label><span class="required text-danger">*</span>
                                     {!! Form::text('email', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password">Contraseña</label><span class="required text-danger">*</span>
                                     {!! Form::password('password', array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="confirm-password">Confirmar contraseña</label><span class="required text-danger">*</span>
                                     {!! Form::password('confirm-password', array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Roles</label><span class="required text-danger">*</span>
-                                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
+                                    <label for="roles">Roles</label><span class="required text-danger">*</span>
+                                    {!! Form::select('roles[]', $roles, $userRole, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <a href="/usuarios" class="btn btn-warning">Cancelar</a>
+                                <button type="submit" class="btn btn-warning">Guardar</button>
+                                <a href="/usuarios" class="btn btn-primary">Cancelar</a>
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -68,3 +77,4 @@
         </div>
     </section>
 @endsection
+

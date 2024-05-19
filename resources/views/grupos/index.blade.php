@@ -12,11 +12,11 @@
                         <div class="card-body">
 
                         @can('crear-grupo')
-                        <a class="btn btn-warning" href="{{ route('grupos.create') }}">Nuevo</a>
+                        <a class="btn btn-warning" href="{{ route('grupos.create') }}">Nuevo Grupo</a>
                         @endcan
 
                         <table class="table table-striped mt-2 table_id" id="miTabla">
-                                <thead style="background-color:#6777ef">
+                                <thead style="background-color:#ffa426">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Clave</th>
                                     <th style="color:#fff;">Cupo</th>

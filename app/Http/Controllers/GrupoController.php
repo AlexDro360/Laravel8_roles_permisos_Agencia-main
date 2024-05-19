@@ -34,14 +34,27 @@ class GrupoController extends Controller
     {
         //$request ->dd();
         request()->validate([
-            'clave' => 'required',
-            'cupo' => 'required|max:3',
-            'periodo' => 'required',
+            'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
+            'cupo' => 'required|numeric|between:15,45',
+            'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
             'users_id' => 'required',
             'materias_id' => 'required',
             'horaInicio'=>'required',
             'horaFin'=>'required',
             'Dias'=>'required',
+        ], [
+            'clave.required' => 'La Clave es obligatorio.',
+            'clave.regex' => 'La Clave cuenta con caracteres especiales',
+            'cupo.required' => 'El Cupo es obligatorio',
+            'cupo.numeric' => 'El Cupo solo acepta números',
+            'cupo.between' => 'El Cupo minimo son 15 y maximo 45',
+            'periodo.required' => 'El Periodo es obligatorio',
+            'periodo.regex' => 'El Periodo solo acepta letras, números y -',
+            'user_id.required' => 'El Profesor es obligatorio',
+            'materias_id.required' => 'la Materia es obligatorio',
+            'horaInicio.required' => 'La Hora Inicio es obligatoria',
+            'horaFin.required' => 'La hora Fin es obligatoria',
+            'Dias.required' => 'Los Dias son obligatorios',
         ]);
 
         $registro = Grupo::create($request->all());
@@ -110,12 +123,27 @@ class GrupoController extends Controller
     public function update(Request $request, Grupo $grupo )
     {
         request()->validate([
-            'clave' => 'required',
-            'cupo'=>'required',
-            'periodo'=>'required',
+            'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
+            'cupo' => 'required|numeric|between:15,45',
+            'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
+            'users_id' => 'required',
+            'materias_id' => 'required',
             'horaInicio'=>'required',
             'horaFin'=>'required',
             'Dias'=>'required',
+        ], [
+            'clave.required' => 'La Clave es obligatorio.',
+            'clave.regex' => 'La Clave cuenta con caracteres especiales',
+            'cupo.required' => 'El Cupo es obligatorio',
+            'cupo.numeric' => 'El Cupo solo acepta números',
+            'cupo.between' => 'El Cupo minimo son 15 y maximo 45',
+            'periodo.required' => 'El Periodo es obligatorio',
+            'periodo.regex' => 'El Periodo solo acepta letras, números y -',
+            'user_id.required' => 'El Profesor es obligatorio',
+            'materias_id.required' => 'la Materia es obligatorio',
+            'horaInicio.required' => 'La Hora Inicio es obligatoria',
+            'horaFin.required' => 'La hora Fin es obligatoria',
+            'Dias.required' => 'Los Dias son obligatorios',
         ]);
         //$request->dd();
         $grupo->update($request->all());

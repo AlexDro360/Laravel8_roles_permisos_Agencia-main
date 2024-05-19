@@ -55,22 +55,40 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'apellidoP' => 'required',
-            'apellidoM'=>'required',
-            'sexo'=>'required',
-            'numero_tarjeta'=>'required|max:16|min:16',
+            'name' => 'required|regex:/^[A-Za-zÁÉÍÓÚáéíóúüÜñÑ ]+$/',
+            'apellidoP' => 'required|alpha',
+            'apellidoM' => 'required|alpha',
+            'sexo' => 'required',
+            'numero_tarjeta' => 'required|size:16|alpha_num',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
+            'password' => 'required|same:confirm-password|min:8',
             'roles' => 'required'
+        ], [
+            'name.required' => 'El Nombre es obligatorio.',
+            'name.regex' => 'El Nombre solo puede contener letras y espacio.',
+            'apellidoP.required' => 'El Apellido Paterno es obligatorio.',
+            'apellidoP.alpha' => 'El Apellido Paterno solo puede contener letras.',
+            'apellidoM.required' => 'El Apellido Materno es obligatorio.',
+            'apellidoM.alpha' => 'El Apellido Materno solo puede contener letras.',
+            'sexo.required' => 'El Sexo es obligatorio.',
+            'numero_tarjeta.required' => 'El Número de Tarjeta es obligatorio.',
+            'numero_tarjeta.alpha_num' => 'El Número de Tarjeta solo puede contener letras y números.',
+            'numero_tarjeta.size' => 'El Número de tarjeta debe tener exactamente 16 caracteres.',
+            'email.required' => 'El Email es obligatorio.',
+            'email.email' => 'El Email debe ser una dirección de correo válida.',
+            'email.unique' => 'El Email ya está en uso.',
+            'password.required' => 'La Contraseña es obligatorio.',
+            'password.min' => 'La contraseña debe de tener minimo 8 caracteres',
+            'password.same' => 'Las Contraseñas no coinciden.',
+            'roles.required' => 'El Role es obligatorio.'
         ]);
-    
+
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-    
+
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
-    
+
         return redirect()->route('usuarios.index');
     }
 
@@ -110,15 +128,34 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $this->validate($request, [
-            'name' => 'required',
-            'apellidoP' => 'required',
-            'apellidoM'=>'required',
-            'sexo'=>'required',
-            'numero_tarjeta'=>'required|max:16',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
+            'name' => 'required|regex:/^[A-Za-zÁÉÍÓÚáéíóúüÜñÑ ]+$/',
+            'apellidoP' => 'required|alpha',
+            'apellidoM' => 'required|alpha',
+            'sexo' => 'required',
+            'numero_tarjeta' => 'required|size:16|alpha_num',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|same:confirm-password|min:8',
             'roles' => 'required'
+        ], [
+            'name.required' => 'El Nombre es obligatorio.',
+            'name.regex' => 'El Nombre solo puede contener letras y espacio.',
+            'apellidoP.required' => 'El Apellido Paterno es obligatorio.',
+            'apellidoP.alpha' => 'El Apellido Paterno solo puede contener letras.',
+            'apellidoM.required' => 'El Apellido Materno es obligatorio.',
+            'apellidoM.alpha' => 'El Apellido Materno solo puede contener letras.',
+            'sexo.required' => 'El Sexo es obligatorio.',
+            'numero_tarjeta.required' => 'El Número de Tarjeta es obligatorio.',
+            'numero_tarjeta.alpha_num' => 'El Número de Tarjeta solo puede contener letras y números.',
+            'numero_tarjeta.size' => 'El Número de tarjeta debe tener exactamente 16 caracteres.',
+            'email.required' => 'El Email es obligatorio.',
+            'email.email' => 'El Email debe ser una dirección de correo válida.',
+            'email.unique' => 'El Email ya está en uso.',
+            'password.required' => 'La Contraseña es obligatorio.',
+            'password.min' => 'La contraseña debe de tener minimo 8 caracteres',
+            'password.same' => 'Las Contraseñas no coinciden.',
+            'roles.required' => 'El Role es obligatorio.'
         ]);
     
         $input = $request->all();

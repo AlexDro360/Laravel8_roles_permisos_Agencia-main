@@ -17,7 +17,7 @@
                         @endcan
 
                         <table class="table table-striped mt-2 table_id" id="miTabla">
-                                <thead style="background-color:#6777ef">
+                                <thead style="background-color:#ffa426">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Nombre</th>
                                     <th style="color:#fff;">Direccion</th>

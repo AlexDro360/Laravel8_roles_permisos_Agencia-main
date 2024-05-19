@@ -14,22 +14,25 @@
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
 
-@yield('page_css')
-<!-- Template CSS -->
+    @yield('page_css')
+    <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('web/css/components.css')}}">
     <style>
       .toolbar {
-    float: left;
-    }
-    .searching{
-        float: right;
-    }
+          float: left;
+      }
+      .searching {
+          float: right;
+      }
     </style>
+    
     @yield('page_css')
-
-
     @yield('css')
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('ITO.png') }}">
+
 </head>
 <body>
 
@@ -38,7 +41,6 @@
         <div class="navbar-bg"></div>
         <nav class="navbar navbar-expand-lg main-navbar">
             @include('layouts.header')
-
         </nav>
         <div class="main-sidebar main-sidebar-postion">
             @include('layouts.sidebar')

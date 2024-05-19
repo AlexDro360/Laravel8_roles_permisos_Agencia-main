@@ -776,7 +776,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .alert.alert-dark {
-    background-color: #191d21;
+    background-color: #2d21dd;
 }
 
 /* 3.5 Card */
@@ -1789,14 +1789,14 @@ h6 .badge {
 }
 
 .btn-warning, .btn-warning.disabled {
-    box-shadow: 0 2px 6px #ffc473;
-    background-color: #ffa426;
-    border-color: #ffa426;
+    box-shadow: 0 2px 6px #7bb704;
+    background-color: #76a813;
+    border-color: #7bb704;
     color: #fff;
 }
 
 .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.disabled:hover, .btn-warning.disabled:focus, .btn-warning.disabled:active {
-    background-color: #ff990d !important;
+    background-color: #7bb704 !important;
     color: #fff !important;
 }
 

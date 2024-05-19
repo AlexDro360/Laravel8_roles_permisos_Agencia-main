@@ -43,8 +43,10 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="/roles" class="btn btn-warning">Cancelar</a>
+                        <<div class="col-xs-12 col-sm-12 col-md-12">
+                                <button type="submit" class="btn btn-warning">Guardar</button>
+                                <a href="/roles" class="btn btn-primary">Cancelar</a>
+                        </div>
 
                     </div>
                     {!! Form::close() !!}

@@ -23,81 +23,81 @@
                             </div>
                         @endif
 
+                        <form action="{{ route('grupos.update',$grupo->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                       <label for="clave">Clave</label>
+                                       <input type="text" name="clave" class="form-control" value="{{ $grupo->clave }}">
+                                    </div>
+                                </div>
 
-                    <form action="{{ route('grupos.update',$grupo->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                   <label for="clave">Clave</label>
-                                   <input type="text" name="clave" class="form-control" value="{{ $grupo->clave }}">
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                       <label for="cupo">Cupo</label>
+                                       <input type="text" name="cupo" class="form-control" value="{{ $grupo->cupo }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                       <label for="periodo">Periodo</label>
+                                       <input type="text" name="periodo" class="form-control" value="{{ $grupo->periodo }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="users_id">Profesor</label><span class="required text-danger">*</span>
+                                        {!! Form::select('users_id', $profesores,$grupo->users_id, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="materias_id">Materia</label><span class="required text-danger">*</span>
+                                        {!! Form::select('materias_id', $materias,$grupo->materias_id, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                       <label for="horaInicio">Hora Inicio</label>
+                                       <input type="time" name="horaInicio" class="form-control" value="{{$diasU->first()->horaInicio}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                       <label for="horaFin">Hora Fin</label>
+                                       <input type="time" name="horaFin" class="form-control" value="{{$diasU->first()->horaFin}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Dias para la materia:</label><span class="required text-danger">*</span>
+                                        <br/>
+                                        @php
+                                            $d = $diasU->pluck('nombre');
+                                        @endphp
+                                        <br/>
+                                        @foreach($dias as $dia) 
+                                            <label>{{ Form::checkbox('Dias[]', $dia->id, $d->contains($dia->nombre), array('class' => 'name')) }}
+                                            {{ $dia->nombre }}</label>
+                                            <br/>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <a href="/grupos" class="btn btn-warning">Cancelar</a>
                                 </div>
                             </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                   <label for="cupo">Cupo</label>
-                                   <input type="text" name="cupo" class="form-control" value="{{ $grupo->cupo }}">
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                   <label for="periodo">Periodo</label>
-                                   <input type="text" name="periodo" class="form-control" value="{{ $grupo->periodo }}">
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">Profesor</label><span class="required text-danger">*</span>
-                                    {!! Form::select('users_id', $profesores,$grupo->users_id, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">Materia</label><span class="required text-danger">*</span>
-                                    {!! Form::select('materias_id', $materias,$grupo->materias_id, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                   <label for="horaInicio">Hora Inicio</label>
-                                   <input type="time" name="horaInicio" class="form-control" value="{{$diasU->first()->horaInicio}}">
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                   <label for="horaFin">Hora Fin</label>
-                                   <input type="time" name="horaFin" class="form-control" value="{{$diasU->first()->horaFin}}">
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="">Dias para la materia:</label><span class="required text-danger">*</span>
-                                    <br/>
-                                    @php
-                                        $d = $diasU->pluck('nombre');
-                                    @endphp
-                                    @foreach($dias as $dia) 
-                                        <label>{{ Form::checkbox('Dias[]', $dia->id, $d->contains($dia->nombre), array('class' => 'name')) }}
-                                        {{ $dia->nombre }}</label>
-                                    <br/>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <a href="/grupos" class="btn btn-warning">Cancelar</a>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
 
                         </div>
                     </div>
@@ -106,3 +106,4 @@
         </div>
     </section>
 @endsection
+

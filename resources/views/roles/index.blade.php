@@ -20,7 +20,7 @@
                          --}}
 
                             <table class="table table-striped mt-2 table_id" id="miTabla2">
-                                <thead style="background-color:#6777ef">
+                                <thead style="background-color:#ffa426">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Rol</th>
                                     <th style="color:#fff;">Acciones</th>
