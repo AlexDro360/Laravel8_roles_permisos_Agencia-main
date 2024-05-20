@@ -26,6 +26,7 @@ class User extends Authenticatable
         'apellidoP', 
         'apellidoM', 
         'sexo',
+        'curp',
         'numero_tarjeta',
         'email',
         'password',

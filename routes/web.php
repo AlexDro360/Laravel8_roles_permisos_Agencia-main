@@ -8,7 +8,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EscuelaController;
 use App\Http\Controllers\MateriasController;
-use App\Http\Controllers\ProfesoreController;
+use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\MiGrupoController;
 /*
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('blogs', BlogController::class);
     Route::resource('escuelas', EscuelaController::class);
     Route::resource('materias', MateriasController::class);
-    Route::resource('profesores', ProfesoreController::class);
+    Route::resource('profesores', ProfesorController::class);
     Route::resource('grupos', GrupoController::class);
     Route::resource('Mis-Grupos', MiGrupoController::class);
 });

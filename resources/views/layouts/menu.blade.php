@@ -7,6 +7,11 @@
         <i class=" fas fa-users"></i><span>Usuarios</span>
     </a>
     @endcan
+    @can('ver-usuario')
+    <a class="nav-link" href="/profesores">
+        <i class=" fas fa-users"></i><span>Profesores</span>
+    </a>
+    @endcan
     @can('ver-rol')
     <a class="nav-link" href="/roles">
         <i class=" fas fa-user-lock"></i><span>Roles</span>

@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Models\Profesore;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 
-class UsuarioController extends Controller
+class ProfesorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,13 +24,13 @@ class UsuarioController extends Controller
     {      
         //Sin paginación
         //$usuarios = User::all();
-        $usuarios = User::paginate(5);
+        $profesores = User::role('profesor')->get();
         /* $usuarios = User::all();
         return view('usuarios.index',compact('usuarios')); */
 
         //Con paginación
         // $usuarios = User::paginate(2);
-        return view('usuarios.index',compact('usuarios'));
+        return view('profesores.index',compact('profesores'));
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -43,7 +44,7 @@ class UsuarioController extends Controller
     {
         //aqui trabajamos con name de las tablas de users
         $roles = Role::pluck('name','name')->all();
-        return view('usuarios.crear',compact('roles'));
+        return view('profesores.crear',compact('roles'));
     }
 
     /**
@@ -59,8 +60,8 @@ class UsuarioController extends Controller
             'apellidoP' => 'required|alpha',
             'apellidoM' => 'required|alpha',
             'sexo' => 'required',
-            'curp'=>['required','regex:/^[A-ZÑ]{2}[B-DF-HJ-NÑP-TV-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/'],
-            'numero_tarjeta' => 'required|size:16|alpha_num',
+            'curp'=>['required','unique:users,curp','regex:/^[A-ZÑ]{2}[B-DF-HJ-NÑP-TV-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/'],
+            'numero_tarjeta' => 'required|size:16|alpha_num|unique:users,numero_tarjeta',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password|min:8',
             'roles' => 'required'
@@ -74,9 +75,11 @@ class UsuarioController extends Controller
             'sexo.required' => 'El Sexo es obligatorio.',
             'curp.required'=>'La CURP es obligatoria',
             'curp.regex'=>'CURP inválida',
+            'curp.unique'=>'Esta CURP ya está en uso',
             'numero_tarjeta.required' => 'El Número de Tarjeta es obligatorio.',
             'numero_tarjeta.alpha_num' => 'El Número de Tarjeta solo puede contener letras y números.',
             'numero_tarjeta.size' => 'El Número de tarjeta debe tener exactamente 16 caracteres.',
+            'numero_tarjeta.unique'=>'Número de tarjeta existente',
             'email.required' => 'El Email es obligatorio.',
             'email.email' => 'El Email debe ser una dirección de correo válida.',
             'email.unique' => 'El Email ya está en uso.',
@@ -90,9 +93,9 @@ class UsuarioController extends Controller
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user->assignRole('Profesor');
 
-        return redirect()->route('usuarios.index');
+        return redirect()->route('profesores.index');
     }
 
     /**
@@ -118,7 +121,7 @@ class UsuarioController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return view('usuarios.editar',compact('user','roles','userRole'));
+        return view('profesores.editar',compact('user','roles','userRole'));
     }
     
 
@@ -137,8 +140,8 @@ class UsuarioController extends Controller
             'apellidoP' => 'required|alpha',
             'apellidoM' => 'required|alpha',
             'sexo' => 'required',
-            'curp'=>['required','regex:/^[A-ZÑ]{2}[B-DF-HJ-NÑP-TV-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/'],
-            'numero_tarjeta' => 'required|size:16|alpha_num',
+            'curp'=>['required','unique:users,curp','regex:/^[A-ZÑ]{2}[B-DF-HJ-NÑP-TV-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/'],
+            'numero_tarjeta' => 'required|size:16|alpha_num|unique:users,numero_tarjeta',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password|min:8',
             'roles' => 'required'
@@ -152,9 +155,11 @@ class UsuarioController extends Controller
             'sexo.required' => 'El Sexo es obligatorio.',
             'curp.required'=>'La CURP es obligatoria',
             'curp.regex'=>'CURP inválida',
+            'curp.unique'=>'Esta CURP ya está en uso',
             'numero_tarjeta.required' => 'El Número de Tarjeta es obligatorio.',
             'numero_tarjeta.alpha_num' => 'El Número de Tarjeta solo puede contener letras y números.',
             'numero_tarjeta.size' => 'El Número de tarjeta debe tener exactamente 16 caracteres.',
+            'numero_tarjeta.unique'=>'Número de tarjeta existente',
             'email.required' => 'El Email es obligatorio.',
             'email.email' => 'El Email debe ser una dirección de correo válida.',
             'email.unique' => 'El Email ya está en uso.',
@@ -163,7 +168,6 @@ class UsuarioController extends Controller
             'password.same' => 'Las Contraseñas no coinciden.',
             'roles.required' => 'El Role es obligatorio.'
         ]);
-    
         $input = $request->all();
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
@@ -177,7 +181,7 @@ class UsuarioController extends Controller
     
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('usuarios.index');
+        return redirect()->route('profesores.index');
     }
 
     /**
@@ -189,6 +193,6 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('usuarios.index');
+        return redirect()->route('profesores.index');
     }
 }

@@ -15,7 +15,7 @@
                                     @php
                                         use App\Models\User;                                               
                                     @endphp
-                                    @can('ver-grupo')
+                                    @can('ver-usuario')
                                     <div class="card bg-c-blue order-card">
                                             <div class="card-block">
                                             <h5>Usuarios</h5>                                               
@@ -28,6 +28,26 @@
                                         </div>                                    
                                     </div>
                                     @endcan
+
+                                    @php
+                                        use App\Models\Profesore;                                              
+                                    @endphp
+                                    @can('ver-usuario')                                                           
+                                    
+                                    <div class="col-md-4 col-xl-4">
+                                        <div class="card bg-c-purple order-card">
+                                            <div class="card-block">
+                                                <h5>Profesores</h5>                                               
+                                                @php
+                                                $cant_Profesores = Profesore::count();                                                
+                                                @endphp
+                                                <h2 class="text-right"><i class="fas fa-users"></i><span>{{$cant_Profesores}}</span></h2>
+                                                <p class="m-b-0 text-right"><a href="/profesores" class="text-white">Ver más</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endcan  
+
                                     @php
                                     use Spatie\Permission\Models\Role;                                           
                                     @endphp

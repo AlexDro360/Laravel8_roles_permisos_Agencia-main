@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
   <div class="section-header">
-      <h3 class="page__heading">Usuarios</h3>
+      <h3 class="page__heading">Profesores</h3>
   </div>
       <div class="section-body">
           <div class="row">
@@ -12,7 +12,7 @@
                       <div class="card-body">
 
 
-                      <a class="btn btn-warning" href="{{ route('usuarios.create') }}" title="Crear nuevo usuario">Nuevo usuario</a>
+                      <a class="btn btn-warning" href="{{ route('profesores.create') }}" title="Crear nuevo usuario">Nuevo profesor</a>
                       <div>
                       <br>
                       </div>
@@ -38,7 +38,7 @@
                                   <th style="color:#fff;">Acciones</th>
                               </thead>
                               <tbody>
-                                @foreach ($usuarios as $usuario)
+                                @foreach ($profesores as $usuario)
                                   <tr>
                                     <td style="display: none;">{{ $usuario->id }}</td>
                                     <td>{{ $usuario->name }}</td>
@@ -55,7 +55,7 @@
                                     </td>
 
                                     <td>
-                                      <a class="btn btn-info" href="{{ route('usuarios.edit',$usuario->id) }}" title="Editar usuario">Editar</a>
+                                      <a class="btn btn-info" href="{{ route('profesores.edit',$usuario->id) }}" title="Editar usuario">Editar</a>
 
                                       {!! Form::open(['method' => 'DELETE','route' => ['usuarios.destroy', $usuario->id],'style'=>'display:inline']) !!}
                                           {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
