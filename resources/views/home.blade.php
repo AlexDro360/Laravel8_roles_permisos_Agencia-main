@@ -39,7 +39,7 @@
                                             <div class="card-block">
                                                 <h5>Profesores</h5>                                               
                                                 @php
-                                                $cant_Profesores = Profesore::count();                                                
+                                                $cant_Profesores =  User::role('profesor')->count();                                                
                                                 @endphp
                                                 <h2 class="text-right"><i class="fas fa-users"></i><span>{{$cant_Profesores}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/profesores" class="text-white">Ver más</a></p>

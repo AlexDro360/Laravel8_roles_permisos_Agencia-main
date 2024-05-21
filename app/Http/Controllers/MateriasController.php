@@ -11,7 +11,8 @@ class MateriasController extends Controller
     public function index()
     {
          //Con paginación
-         $materias = Materia::paginate(5);
+         //$materias = Materia::paginate(5);
+         $materias=Materia::all();
          return view('materias.index',compact('materias'));
          //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $blogs->links() !!}
     }

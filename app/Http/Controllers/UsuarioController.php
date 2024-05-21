@@ -22,8 +22,8 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {      
         //Sin paginación
-        //$usuarios = User::all();
-        $usuarios = User::paginate(5);
+        $usuarios = User::all();
+        //$usuarios = User::paginate(5);
         /* $usuarios = User::all();
         return view('usuarios.index',compact('usuarios')); */
 
