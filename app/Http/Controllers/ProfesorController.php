@@ -195,7 +195,7 @@ class ProfesorController extends Controller
 
     // Eliminar roles antiguos y asignar los nuevos roles al usuario
     DB::table('model_has_roles')->where('model_id', $id)->delete();
-    $user->assignRole($request->input('roles'));
+    $user->assignRole('Profesor');
 
     // Redirigir a la ruta de índice de profesores
     return redirect()->route('profesores.index');
