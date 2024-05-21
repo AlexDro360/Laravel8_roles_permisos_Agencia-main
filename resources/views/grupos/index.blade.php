@@ -15,6 +15,23 @@
                         <a class="btn btn-warning" href="{{ route('grupos.create') }}">Nuevo Grupo</a>
                         @endcan
 
+                        <form action="{{ route('grupos.index') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br/>
+                                    <div class="form-group">
+                                        {!! Form::select('periodo', $fper,$periodo, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <br/>
+                                    <button type="submit" class="btn btn-warning">Filtrar</button>
+                                    <br/>
+                                </div>
+                            </div>
+                        </form>
+                        
                         <table class="table table-striped mt-2 table_id" id="miTabla">
                                 <thead style="background-color:#ffa426">
                                     <th style="display: none;">ID</th>

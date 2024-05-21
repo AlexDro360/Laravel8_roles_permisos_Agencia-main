@@ -17,15 +17,19 @@ use Illuminate\Support\Arr;
 
 class GrupoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $periodo = $request->get('periodo');
         $grupos = Grupo::query()
-            ->join('users', 'users.id', '=', 'grupos.users_id')
-            ->join('materias', 'materias.id', '=', 'grupos.materias_id')
-            ->select('grupos.id as id', 'grupos.clave as clave', 'grupos.cupo as cupo', 'grupos.periodo as periodo', 'users.name as nombre', 'users.apellidoP as apellidoP', 'users.apellidoM as apellidoM', 'materias.nombre as nombreM')
-            ->get();
+        ->join('users','users.id','=','grupos.users_id')
+        ->join('materias','materias.id','=','grupos.materias_id')
+        ->select('grupos.id as id','grupos.clave as clave','grupos.cupo as cupo','grupos.periodo as periodo','users.name as nombre','users.apellidoP as apellidoP','users.apellidoM as apellidoM','materias.nombre as nombreM')
+        ->where('periodo','like',"%$periodo%")
+        ->get();
+
+        $fper = collect([''=>'Todos los periodos'])->union(Grupo::get()->pluck('periodo','periodo'));
         
-        return view('grupos.index', compact('grupos'));
+        return view('grupos.index',compact('grupos','periodo','fper'));
     }
 
     public function create()
