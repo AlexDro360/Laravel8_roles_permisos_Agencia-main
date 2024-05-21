@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="card card-primary">
-        <div class="card-header"><h4>Reset Password</h4></div>
+        <div class="card-header"><h4>Restablecer contraseña</h4></div>
 
         <div class="card-body">
             @if (session('status'))
@@ -24,13 +24,13 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                        Send Reset Link
+                        Solicitar Link de Restablecimiento
                     </button>
                 </div>
             </form>
         </div>
     </div>
     <div class="mt-5 text-muted text-center">
-        Recalled your login info? <a href="{{ route('login') }}">Sign In</a>
+        Regresar a Inicio de Sesión <a href="{{ route('login') }}">Iniciar Sesión</a>
     </div>
 @endsection

@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Grupo;
 use App\Models\Horario;
 use App\Models\Dia;
-use App\Models\Profesore;
 use App\Models\Materia;
 use App\Models\User;
-
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\GroupAssigned;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
@@ -21,150 +20,155 @@ class GrupoController extends Controller
     public function index()
     {
         $grupos = Grupo::query()
-        ->join('users','users.id','=','grupos.users_id')
-        ->join('materias','materias.id','=','grupos.materias_id')
-        ->select('grupos.id as id','grupos.clave as clave','grupos.cupo as cupo','grupos.periodo as periodo','users.name as nombre','users.apellidoP as apellidoP','users.apellidoM as apellidoM','materias.nombre as nombreM')
-        ->get();
-        $horarios=null;
-        return view('grupos.index',compact('grupos'));
-        // return(compact('grupos',));
+            ->join('users', 'users.id', '=', 'grupos.users_id')
+            ->join('materias', 'materias.id', '=', 'grupos.materias_id')
+            ->select('grupos.id as id', 'grupos.clave as clave', 'grupos.cupo as cupo', 'grupos.periodo as periodo', 'users.name as nombre', 'users.apellidoP as apellidoP', 'users.apellidoM as apellidoM', 'materias.nombre as nombreM')
+            ->get();
+        
+        return view('grupos.index', compact('grupos'));
+    }
+
+    public function create()
+    {
+        $profesores = User::role('Profesor')
+            ->select(DB::raw('CONCAT(name, " ", apellidoP, " ", apellidoM, " ", numero_tarjeta) AS nombreC'), 'id')
+            ->get()
+            ->pluck('nombreC', 'id');
+
+        $dias = Dia::all();
+        $materias = Materia::where('estado', true)
+            ->select(DB::raw('CONCAT(nombre, " ", clave) as nombre'), 'id')
+            ->pluck('nombre', 'id');
+        
+        return view('grupos.crear', compact('dias', 'materias', 'profesores'));
     }
 
     public function store(Request $request)
     {
-        //$request ->dd();
-        request()->validate([
+        $request->validate([
             'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
             'cupo' => 'required|numeric|between:15,45',
             'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
             'users_id' => 'required',
             'materias_id' => 'required',
-            'horaInicio'=>'required',
-            'horaFin'=>'required',
-            'Dias'=>'required',
+            'horaInicio' => 'required',
+            'horaFin' => 'required',
+            'Dias' => 'required|array',
         ], [
-            'clave.required' => 'La Clave es obligatorio.',
-            'clave.regex' => 'La Clave cuenta con caracteres especiales',
-            'cupo.required' => 'El Cupo es obligatorio',
-            'cupo.numeric' => 'El Cupo solo acepta números',
-            'cupo.between' => 'El Cupo minimo son 15 y maximo 45',
-            'periodo.required' => 'El Periodo es obligatorio',
-            'periodo.regex' => 'El Periodo solo acepta letras, números y -',
-            'user_id.required' => 'El Profesor es obligatorio',
-            'materias_id.required' => 'la Materia es obligatorio',
-            'horaInicio.required' => 'La Hora Inicio es obligatoria',
-            'horaFin.required' => 'La hora Fin es obligatoria',
-            'Dias.required' => 'Los Dias son obligatorios',
+            'clave.required' => 'La Clave es obligatoria.',
+            'clave.regex' => 'La Clave contiene caracteres especiales no permitidos.',
+            'cupo.required' => 'El Cupo es obligatorio.',
+            'cupo.numeric' => 'El Cupo solo acepta números.',
+            'cupo.between' => 'El Cupo mínimo es 15 y máximo 45.',
+            'periodo.required' => 'El Periodo es obligatorio.',
+            'periodo.regex' => 'El Periodo solo acepta letras, números y guiones.',
+            'users_id.required' => 'El Profesor es obligatorio.',
+            'materias_id.required' => 'La Materia es obligatoria.',
+            'horaInicio.required' => 'La Hora de Inicio es obligatoria.',
+            'horaFin.required' => 'La Hora de Fin es obligatoria.',
+            'Dias.required' => 'Los Días son obligatorios.',
         ]);
 
-        $registro = Grupo::create($request->all());
-        $hI=$request->horaInicio.":00";
-        $hF=$request->horaFin.":00";
-        foreach($request->Dias as $dia){
-            Horario::create(['horaInicio'=>$hI,'horaFin'=> $hF,'dias_id'=>$dia,'grupos_id'=>$registro->id]);
+        $grupo = Grupo::create($request->all());
+        $horaInicio = $request->horaInicio . ":00";
+        $horaFin = $request->horaFin . ":00";
+
+        foreach ($request->Dias as $dia) {
+            Horario::create([
+                'horaInicio' => $horaInicio,
+                'horaFin' => $horaFin,
+                'dias_id' => $dia,
+                'grupos_id' => $grupo->id
+            ]);
         }
+
+        // Enviar notificación por correo
+        $profesor = User::find($request->users_id);
+        $materia = Materia::find($request->materias_id);
+        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia));
+
         return redirect()->route('grupos.index');
     }
-    
-    public function create()
-    {
-        $ids=collect();
-        $us = User::select('id')->get();
-        foreach($us as $u){
-            $user = User::find($u->id);
-            $roles = Role::pluck('name','name')->all();
-            $userRole = $user->roles->pluck('name','name')->all();
-            foreach($userRole as $ur){
-                if($ur == 'Profesor'){
-                    
-                    $ids->push($user->id);
-                }
-            }
-        }
-        $profesores = User::select(DB::raw('CONCAT(name," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->whereIn('id',$ids)->get()->pluck('nombreC','id');
-        $dias = Dia::get();
-        $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->where('estado','=',true)->pluck('nombre','id');
-        return view('grupos.crear',compact('dias','materias','profesores'));
-    }   
 
     public function edit(Grupo $grupo)
     {
-        $dias = Dia::get();
-        $ids=collect();
-        $us = User::select('id')->get();
-        foreach($us as $u){
-            $user = User::find($u->id);
-            $roles = Role::pluck('name','name')->all();
-            $userRole = $user->roles->pluck('name','name')->all();
-            foreach($userRole as $ur){
-                if($ur == 'Profesor'){
-                    
-                    $ids->push($user->id);
-                }
-            }
+        $profesores = User::role('Profesor')
+            ->select(DB::raw('CONCAT(name, " ", apellidoP, " ", apellidoM, " ", numero_tarjeta) AS nombreC'), 'id')
+            ->get()
+            ->pluck('nombreC', 'id');
+
+        $dias = Dia::all();
+        $materias = Materia::where('estado', true)
+            ->select(DB::raw('CONCAT(nombre, " ", clave) as nombre'), 'id')
+            ->pluck('nombre', 'id');
+        
+        $diasU = Horario::where('grupos_id', $grupo->id)
+            ->join('dias', 'dias.id', '=', 'horarios.dias_id')
+            ->select('dias.nombre as nombre', 'horarios.horaInicio as horaInicio', 'horarios.horaFin as horaFin')
+            ->get();
+
+        return view('grupos.editar', compact('grupo', 'diasU', 'dias', 'materias', 'profesores'));
+    }
+
+    public function update(Request $request, Grupo $grupo)
+    {
+        $request->validate([
+            'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
+            'cupo' => 'required|numeric|between:15,45',
+            'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
+            'users_id' => 'required',
+            'materias_id' => 'required',
+            'horaInicio' => 'required',
+            'horaFin' => 'required',
+            'Dias' => 'required|array',
+        ], [
+            'clave.required' => 'La Clave es obligatoria.',
+            'clave.regex' => 'La Clave contiene caracteres especiales no permitidos.',
+            'cupo.required' => 'El Cupo es obligatorio.',
+            'cupo.numeric' => 'El Cupo solo acepta números.',
+            'cupo.between' => 'El Cupo mínimo es 15 y máximo 45.',
+            'periodo.required' => 'El Periodo es obligatorio.',
+            'periodo.regex' => 'El Periodo solo acepta letras, números y guiones.',
+            'users_id.required' => 'El Profesor es obligatorio.',
+            'materias_id.required' => 'La Materia es obligatoria.',
+            'horaInicio.required' => 'La Hora de Inicio es obligatoria.',
+            'horaFin.required' => 'La Hora de Fin es obligatoria.',
+            'Dias.required' => 'Los Días son obligatorios.',
+        ]);
+
+        $grupo->update($request->all());
+        Horario::where('grupos_id', $grupo->id)->delete();
+
+        foreach ($request->Dias as $dia) {
+            Horario::create([
+                'horaInicio' => $request->horaInicio,
+                'horaFin' => $request->horaFin,
+                'dias_id' => $dia,
+                'grupos_id' => $grupo->id
+            ]);
         }
-        $profesores = User::select(DB::raw('CONCAT(name," ",apellidoP, " ",apellidoM," ", numero_tarjeta) AS nombreC'),'id')->whereIn('id',$ids)->get()->pluck('nombreC','id');
-        $materias = Materia::select(DB::raw('CONCAT(nombre," ", clave) as nombre'),'id')->where('estado','=',true)->pluck('nombre','id');
-        $diasU = Horario::query()
-            ->join('dias','dias.id','=','horarios.dias_id')
-            ->select('dias.nombre as nombre','horarios.horaInicio as horaInicio','horarios.horaFin as horaFin')
-            ->where('horarios.grupos_id','=',$grupo->id)
-            ->get();    
-        return view('grupos.editar',compact('grupo','diasU','dias','materias','profesores'));
+
+        // Enviar notificación por correo
+        $profesor = User::find($request->users_id);
+        $materia = Materia::find($request->materias_id);
+        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia));
+
+        return redirect()->route('grupos.index');
     }
 
     public function destroy(Grupo $grupo)
     {
         $grupo->delete();
-
-        return redirect()->route('grupos.index');
-    }
-
-    public function update(Request $request, Grupo $grupo )
-    {
-        request()->validate([
-            'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
-            'cupo' => 'required|numeric|between:15,45',
-            'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
-            'users_id' => 'required',
-            'materias_id' => 'required',
-            'horaInicio'=>'required',
-            'horaFin'=>'required',
-            'Dias'=>'required',
-        ], [
-            'clave.required' => 'La Clave es obligatorio.',
-            'clave.regex' => 'La Clave cuenta con caracteres especiales',
-            'cupo.required' => 'El Cupo es obligatorio',
-            'cupo.numeric' => 'El Cupo solo acepta números',
-            'cupo.between' => 'El Cupo minimo son 15 y maximo 45',
-            'periodo.required' => 'El Periodo es obligatorio',
-            'periodo.regex' => 'El Periodo solo acepta letras, números y -',
-            'user_id.required' => 'El Profesor es obligatorio',
-            'materias_id.required' => 'la Materia es obligatorio',
-            'horaInicio.required' => 'La Hora Inicio es obligatoria',
-            'horaFin.required' => 'La hora Fin es obligatoria',
-            'Dias.required' => 'Los Dias son obligatorios',
-        ]);
-        //$request->dd();
-        $grupo->update($request->all());
-        Horario::where('grupos_id', $grupo->id)->delete();
-        foreach($request->Dias as $dia){
-            Horario::create(['horaInicio'=>$request->horaInicio,'horaFin'=> $request->horaFin,'dias_id'=>$dia,'grupos_id'=>$grupo->id]);
-        }
         return redirect()->route('grupos.index');
     }
 
     public function show(Grupo $grupo)
     {
-     //Con paginación
-     $grupos = Grupo::query()
-                ->join('horarios','horarios.grupos_id','=','grupos.id')
-                ->join('dias','dias.id','=','horarios.dias_id')
-                ->select('dias.nombre as nombreD')
-                ->where('grupos.id','=','$grupo')
-                ->get();
-     return view('grupos.index',compact('grupos'));
-     //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $blogs->links() !!}
+        $horarios = Horario::where('grupos_id', $grupo->id)
+            ->join('dias', 'dias.id', '=', 'horarios.dias_id')
+            ->select('dias.nombre as nombreD', 'horarios.horaInicio', 'horarios.horaFin')
+            ->get();
 
+        return view('grupos.show', compact('grupo', 'horarios'));
     }
 }
