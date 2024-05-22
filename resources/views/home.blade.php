@@ -11,12 +11,13 @@
                     <div class="card">
                         <div class="card-body">                          
                                 <div class="row">
-                                    <div class="col-md-4 col-xl-4">
+                                    
                                     @php
                                         use App\Models\User;                                               
                                     @endphp
                                     @can('ver-usuario')
                                     <div class="card bg-c-blue order-card">
+                                        <div class="col-md-4 col-xl-4">
                                             <div class="card-block">
                                             <h5>Usuarios</h5>                                               
                                                 @php
