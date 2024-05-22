@@ -105,7 +105,8 @@
                                     @endcan  
 
                                     @php
-                                        use App\Models\MiGrupo;                                              
+                                        use App\Models\MiGrupo;   
+                                        use Illuminate\Support\Facades\Auth;                                           
                                     @endphp
                                     @can('mi-grupo')                                                           
                                     
@@ -114,7 +115,8 @@
                                             <div class="card-block">
                                                 <h5>Mis Grupos</h5>                                               
                                                 @php
-                                                $cant_Migrupos = Grupo::count();                                                
+                                                $userId = Auth::id();
+                                                $cant_Migrupos = Grupo::where('users_id', $userId)->count();                                             
                                                 @endphp
                                                 <h2 class="text-right"><i class="fa fa-book-reader f-left"></i><span>{{$cant_Migrupos}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/Mis-Grupos" class="text-white">Ver más</a></p>
