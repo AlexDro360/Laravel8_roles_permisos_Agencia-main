@@ -16,5 +16,16 @@ class SeederTablaRol extends Seeder
             'guard_name'=>'web'],
             // Puedes agregar más roles si es necesario
         ]);
+        DB::table('role_has_permissions')->insert([
+            ['permission_id'=>'17',
+            'role_id'=>'1']
+        ]);
+        for($x=1;$x<=16;$x++)
+        DB::table('role_has_permissions')->insert([
+            ['permission_id'=>$x,
+            'role_id'=>'2']
+        ]);
+
+        
     }
 }
