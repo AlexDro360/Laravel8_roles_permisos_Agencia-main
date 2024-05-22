@@ -28,4 +28,5 @@ class SeederTablaRol extends Seeder
 
         
     }
+
 }

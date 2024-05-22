@@ -61,7 +61,7 @@ class ProfesorController extends Controller
             'apellidoP' => 'required|alpha',
             'apellidoM' => 'required|alpha',
             'sexo' => 'required',
-            'curp'=>['required','unique:users,curp','regex:/^[A-ZÑ]{2}[B-DF-HJ-NÑP-TV-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/'],
+            'curp'=>['required','unique:users,curp','regex:/^[A-ZÑ]{4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/'],
             'numero_tarjeta' => 'required|size:16|alpha_num|unique:users,numero_tarjeta',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password|min:8',
@@ -143,7 +143,7 @@ class ProfesorController extends Controller
         'sexo' => 'required',
         'curp' => [
             'required',
-            'regex:/^[A-ZÑ]{2}[B-DF-HJ-NÑP-TV-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/',
+            'regex:/^[A-ZÑ]{4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d+$/',
             Rule::unique('users')->ignore($id)
         ],
         'numero_tarjeta' => ['required','size:16','alpha_num',Rule::unique('users')->ignore($id)],
