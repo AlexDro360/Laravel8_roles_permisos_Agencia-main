@@ -42,7 +42,7 @@
                                                 @php
                                                 $cant_Profesores =  User::role('profesor')->count();                                                
                                                 @endphp
-                                                <h2 class="text-right"><i class="fas fa-users"></i><span>{{$cant_Profesores}}</span></h2>
+                                                <h2 class="text-right"><i class="fas fa-users f-left"></i><span>{{$cant_Profesores}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/profesores" class="text-white">Ver más</a></p>
                                             </div>
                                         </div>
