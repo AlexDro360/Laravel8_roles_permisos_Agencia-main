@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Grupo extends Model
+class Periodo extends Model
 {
     use HasFactory;
-    protected $fillable = ['clave', 'cupo', 'users_id', 'materias_id','periodos_id'];
+    protected $fillable = ['nombre', 'fechaInicio', 'fechaFinal','estado'];
 }

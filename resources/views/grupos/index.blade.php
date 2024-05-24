@@ -55,7 +55,7 @@
                                 <td style="display: none;">{{ $grupo->id }}</td>
                                 <td>{{ $grupo->clave }}</td>
                                 <td>{{ $grupo->cupo }}</td>
-                                <td>{{ $grupo->periodo }}</td>
+                                <td>{{ $grupo->nombreP }}</td>
                                 <td>{{ $grupo->nombre }} {{ $grupo->apellidoP }} {{ $grupo->apellidoM}}</td>
                                 <td>{{ $grupo->nombreM }}</td>
                                 @php

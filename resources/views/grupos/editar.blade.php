@@ -43,13 +43,6 @@
 
                                 <div class="col-xs-12 col-sm-12 col-md-6">
                                     <div class="form-group">
-                                       <label for="periodo">Periodo</label>
-                                       <input type="text" name="periodo" class="form-control" value="{{ $grupo->periodo }}">
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12 col-sm-12 col-md-6">
-                                    <div class="form-group">
                                         <label for="users_id">Profesor</label><span class="required text-danger">*</span>
                                         {!! Form::select('users_id', $profesores,$grupo->users_id, array('class' => 'form-control')) !!}
                                     </div>

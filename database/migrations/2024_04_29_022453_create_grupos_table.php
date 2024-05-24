@@ -17,11 +17,13 @@ class CreateGruposTable extends Migration
             $table->id();
             $table->string('clave');
             $table->bigInteger('cupo');
-            $table->string('periodo');
             $table->foreignId('users_id') ->nullable()
             ->constrained()
             ->onDelete('set null');
             $table->foreignId('materias_id') ->nullable()
+            ->constrained()
+            ->onDelete('set null');
+            $table->foreignId('periodos_id') ->nullable()
             ->constrained()
             ->onDelete('set null');
             $table->timestamps();

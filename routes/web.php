@@ -11,6 +11,7 @@ use App\Http\Controllers\MateriasController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\MiGrupoController;
+use App\Http\Controllers\PeriodoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,4 +44,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('profesores', ProfesorController::class);
     Route::resource('grupos', GrupoController::class);
     Route::resource('Mis-Grupos', MiGrupoController::class);
+    Route::resource('periodos', PeriodoController::class);
 });

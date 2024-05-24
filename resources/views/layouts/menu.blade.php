@@ -32,4 +32,9 @@
         <i class=" fas fa-book-reader"></i><span>Mis Grupos</span>
     </a>
     @endcan
+    @can('ver-periodo')
+    <a class="nav-link" href="/periodos">
+        <i class=" fas fa-book-reader"></i><span>Periodos</span>
+    </a>
+    @endcan
 </li>

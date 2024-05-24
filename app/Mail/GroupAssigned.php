@@ -20,18 +20,20 @@ class GroupAssigned extends Mailable
     public $horaInicio;
     public $horaFin;
     public $dias;
+    public $periodo;
 
-    public function __construct(User $profesor, Grupo $grupo, Materia $materia, $horaInicio, $horaFin, $dias)
+    public function __construct(User $profesor, Grupo $grupo, Materia $materia, $horaInicio, $horaFin, $dias, $periodo)
     {
         $this->profesor = $profesor;
         $this->grupo = $grupo;
         $this->materia = $materia;
         $this->horaInicio = $horaInicio;
         $this->horaFin = $horaFin;
+        $this->periodo = $periodo;
 
         // Fetch the day names from the Dia model assuming $dias contains day IDs
-        $dayNames = Dia::whereIn('id', $dias)->pluck('nombre')->toArray();
-        $this->dias = implode(', ', $dayNames); // Convert array to string
+        // $dayNames = Dia::whereIn('id', $dias)->pluck('nombre')->toArray();
+        // $this->dias = implode(', ', $dayNames); // Convert array to string
     }
 
     public function build()
@@ -45,6 +47,7 @@ class GroupAssigned extends Mailable
                         'horaInicio' => $this->horaInicio,
                         'horaFin' => $this->horaFin,
                         'dias' => $this->dias,
+                        'periodo' => $this->periodo,
                     ]);
     }
 }

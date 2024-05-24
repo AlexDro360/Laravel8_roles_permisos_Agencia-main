@@ -117,7 +117,7 @@
                                                 <h5>Mis Grupos</h5>                                               
                                                 @php
                                                 $userId = Auth::id();
-                                                $cant_Migrupos = Grupo::where('users_id', $userId)->count();                                             
+                                                $cant_Migrupos = Grupo::query()->join('periodos','periodos.id','=','grupos.periodos_id')->where('grupos.users_id', $userId)->where('periodos.estado',true)->count();                                           
                                                 @endphp
                                                 <h2 class="text-right"><i class="fa fa-book-reader f-left"></i><span>{{$cant_Migrupos}}</span></h2>
                                                 <p class="m-b-0 text-right"><a href="/Mis-Grupos" class="text-white">Ver más</a></p>

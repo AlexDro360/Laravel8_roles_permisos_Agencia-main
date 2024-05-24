@@ -43,34 +43,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="periodo">Periodo</label><span class="required text-danger">*</span>
-                                    <input type="text" name="periodo" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="users_id">Profesor</label><span class="required text-danger">*</span>
                                     {!! Form::select('users_id', $profesores,[], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="materias_id">Materia</label><span class="required text-danger">*</span>
                                     {!! Form::select('materias_id', $materias,[], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="horaInicio">Hora Inicio</label><span class="required text-danger">*</span>
                                     <input type="time" name="horaInicio" class="form-control">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="horaFin">Hora Fin</label><span class="required text-danger">*</span>

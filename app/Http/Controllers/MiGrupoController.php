@@ -39,9 +39,10 @@ class MiGrupoController extends Controller
         $Migrupos = Grupo::query()
             ->join('users', 'users.id', '=', 'grupos.users_id')
             ->join('materias', 'materias.id', '=', 'grupos.materias_id')
-            ->select('grupos.id as id', 'grupos.clave as clave', 'grupos.cupo as cupo', 'grupos.periodo as periodo', 'users.name as nombre', 'users.apellidoP as apellidoP', 'users.apellidoM as apellidoM', 'materias.nombre as nombreM')
+            ->join('periodos', 'periodos.id', '=', 'grupos.periodos_id')
+            ->select('grupos.id as id', 'grupos.clave as clave', 'grupos.cupo as cupo', 'periodos.nombre as periodo', 'users.name as nombre', 'users.apellidoP as apellidoP', 'users.apellidoM as apellidoM', 'materias.nombre as nombreM')
             ->where('grupos.users_id', '=', $userId) // Usamos la ID del usuario autenticado
-            ->where('grupos.periodo', '=', $periodo) // Filtramos por el período calculado
+            ->where('periodos.estado', '=', true) // Filtramos por el período calculado
             ->get();
 
         return view('Migrupos.index', compact('Migrupos'));

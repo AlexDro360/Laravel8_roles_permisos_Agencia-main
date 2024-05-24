@@ -9,6 +9,7 @@ use App\Models\Horario;
 use App\Models\Dia;
 use App\Models\Materia;
 use App\Models\User;
+use App\Models\Periodo;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\GroupAssigned;
 use Spatie\Permission\Models\Role;
@@ -23,11 +24,17 @@ class GrupoController extends Controller
         $grupos = Grupo::query()
         ->join('users','users.id','=','grupos.users_id')
         ->join('materias','materias.id','=','grupos.materias_id')
-        ->select('grupos.id as id','grupos.clave as clave','grupos.cupo as cupo','grupos.periodo as periodo','users.name as nombre','users.apellidoP as apellidoP','users.apellidoM as apellidoM','materias.nombre as nombreM')
-        ->where('periodo','like',"%$periodo%")
+        ->join('periodos','periodos.id','=','grupos.periodos_id')
+        ->select('grupos.id as id','grupos.clave as clave','grupos.cupo as cupo','users.name as nombre','users.apellidoP as apellidoP','users.apellidoM as apellidoM','materias.nombre as nombreM','periodos.nombre as nombreP','periodos.estado as estadoP','periodos.id as id_periodo')
         ->get();
 
-        $fper = collect([''=>'Todos los periodos'])->union(Grupo::get()->pluck('periodo','periodo'));
+        if($periodo == ''){
+            $grupos = $grupos->where('estadoP',true);
+        }else{
+            $grupos = $grupos->where('id_periodo','=',$periodo);
+        }
+
+        $fper = collect([''=>'Periodo actual'])->union(Periodo::get()->pluck('nombre','id'));
         
         return view('grupos.index',compact('grupos','periodo','fper'));
     }
@@ -43,7 +50,7 @@ class GrupoController extends Controller
         $materias = Materia::where('estado', true)
             ->select(DB::raw('CONCAT(nombre, " ", clave) as nombre'), 'id')
             ->pluck('nombre', 'id');
-        
+
         return view('grupos.crear', compact('dias', 'materias', 'profesores'));
     }
 
@@ -52,7 +59,6 @@ class GrupoController extends Controller
         $request->validate([
             'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
             'cupo' => 'required|numeric|between:15,45',
-            'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
             'users_id' => 'required',
             'materias_id' => 'required',
             'horaInicio' => 'required',
@@ -64,8 +70,6 @@ class GrupoController extends Controller
             'cupo.required' => 'El Cupo es obligatorio.',
             'cupo.numeric' => 'El Cupo solo acepta números.',
             'cupo.between' => 'El Cupo mínimo es 15 y máximo 45.',
-            'periodo.required' => 'El Periodo es obligatorio.',
-            'periodo.regex' => 'El Periodo solo acepta letras, números y guiones.',
             'users_id.required' => 'El Profesor es obligatorio.',
             'materias_id.required' => 'La Materia es obligatoria.',
             'horaInicio.required' => 'La Hora de Inicio es obligatoria.',
@@ -73,7 +77,16 @@ class GrupoController extends Controller
             'Dias.required' => 'Los Días son obligatorios.',
         ]);
 
-        $grupo = Grupo::create($request->all());
+        $periodoA = Periodo::where('estado','=',true)->get()->first();
+        // $request->dd();
+        $grupo = Grupo::create([
+            'clave'=>$request->clave,
+            'cupo'=>$request->cupo,
+            'users_id'=>$request->users_id,
+            'materias_id'=>$request->materias_id,
+            'periodos_id'=>$periodoA->id
+        ]);
+
         $horaInicio = $request->horaInicio . ":00";
         $horaFin = $request->horaFin . ":00";
 
@@ -89,7 +102,7 @@ class GrupoController extends Controller
         // Enviar notificación por correo
         $profesor = User::find($request->users_id);
         $materia = Materia::find($request->materias_id);
-        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia, $request->horaInicio, $request->horaFin, $request->Dias));
+        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia, $request->horaInicio, $request->horaFin, $request->Dias,$periodoA->nombre));
 
         return redirect()->route('grupos.index');
     }
@@ -119,7 +132,6 @@ class GrupoController extends Controller
     $request->validate([
         'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
         'cupo' => 'required|numeric|between:15,45',
-        'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
         'users_id' => 'required',
         'materias_id' => 'required',
         'horaInicio' => 'required',
@@ -131,8 +143,6 @@ class GrupoController extends Controller
         'cupo.required' => 'El Cupo es obligatorio.',
         'cupo.numeric' => 'El Cupo solo acepta números.',
         'cupo.between' => 'El Cupo mínimo es 15 y máximo 45.',
-        'periodo.required' => 'El Periodo es obligatorio.',
-        'periodo.regex' => 'El Periodo solo acepta letras, números y guiones.',
         'users_id.required' => 'El Profesor es obligatorio.',
         'materias_id.required' => 'La Materia es obligatoria.',
         'horaInicio.required' => 'La Hora de Inicio es obligatoria.',
@@ -152,10 +162,11 @@ class GrupoController extends Controller
         ]);
     }
 
+    $periodoA = Periodo::where('estado','=',true)->get()->first();
     // Enviar notificación por correo
     $profesor = User::find($request->users_id);
     $materia = Materia::find($request->materias_id);
-    Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia, $request->horaInicio, $request->horaFin, $request->Dias));
+    Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia, $request->horaInicio, $request->horaFin, $request->Dias,$periodoA->nombre));
 
     return redirect()->route('grupos.index');
 }
