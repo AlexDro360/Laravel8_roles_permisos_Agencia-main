@@ -23,12 +23,25 @@ class MiGrupoController extends Controller
     public function index()
     {
         $userId = Auth::id(); // Obtenemos la ID del usuario autenticado
+        $currentDate = date('Y-m-d'); // Obtenemos la fecha actual
+        $currentYear = date('Y'); // Obtenemos el año actual
+
+        // Determinar el período
+        $startOfYear = "$currentYear-01-01";
+        $endOfPeriodA = "$currentYear-08-01";
+
+        if ($currentDate >= $startOfYear && $currentDate <= $endOfPeriodA) {
+            $periodo = "$currentYear-A";
+        } else {
+            $periodo = "$currentYear-B";
+        }
 
         $Migrupos = Grupo::query()
             ->join('users', 'users.id', '=', 'grupos.users_id')
             ->join('materias', 'materias.id', '=', 'grupos.materias_id')
             ->select('grupos.id as id', 'grupos.clave as clave', 'grupos.cupo as cupo', 'grupos.periodo as periodo', 'users.name as nombre', 'users.apellidoP as apellidoP', 'users.apellidoM as apellidoM', 'materias.nombre as nombreM')
             ->where('grupos.users_id', '=', $userId) // Usamos la ID del usuario autenticado
+            ->where('grupos.periodo', '=', $periodo) // Filtramos por el período calculado
             ->get();
 
         return view('Migrupos.index', compact('Migrupos'));

@@ -5,10 +5,10 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Grupo;
 use App\Models\Materia;
 use App\Models\User;
+use App\Models\Dia;  // Assuming there is a Dia model to get the names of the days
 
 class GroupAssigned extends Mailable
 {
@@ -17,12 +17,21 @@ class GroupAssigned extends Mailable
     public $profesor;
     public $grupo;
     public $materia;
+    public $horaInicio;
+    public $horaFin;
+    public $dias;
 
-    public function __construct(User $profesor, Grupo $grupo, Materia $materia)
+    public function __construct(User $profesor, Grupo $grupo, Materia $materia, $horaInicio, $horaFin, $dias)
     {
         $this->profesor = $profesor;
         $this->grupo = $grupo;
         $this->materia = $materia;
+        $this->horaInicio = $horaInicio;
+        $this->horaFin = $horaFin;
+
+        // Fetch the day names from the Dia model assuming $dias contains day IDs
+        $dayNames = Dia::whereIn('id', $dias)->pluck('nombre')->toArray();
+        $this->dias = implode(', ', $dayNames); // Convert array to string
     }
 
     public function build()
@@ -33,6 +42,9 @@ class GroupAssigned extends Mailable
                         'grupoClave' => $this->grupo->clave,
                         'materiaNombre' => $this->materia->nombre,
                         'grupoPeriodo' => $this->grupo->periodo,
+                        'horaInicio' => $this->horaInicio,
+                        'horaFin' => $this->horaFin,
+                        'dias' => $this->dias,
                     ]);
     }
 }

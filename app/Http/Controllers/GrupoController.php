@@ -89,7 +89,7 @@ class GrupoController extends Controller
         // Enviar notificación por correo
         $profesor = User::find($request->users_id);
         $materia = Materia::find($request->materias_id);
-        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia));
+        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia, $request->horaInicio, $request->horaFin, $request->Dias));
 
         return redirect()->route('grupos.index');
     }
@@ -115,50 +115,51 @@ class GrupoController extends Controller
     }
 
     public function update(Request $request, Grupo $grupo)
-    {
-        $request->validate([
-            'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
-            'cupo' => 'required|numeric|between:15,45',
-            'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
-            'users_id' => 'required',
-            'materias_id' => 'required',
-            'horaInicio' => 'required',
-            'horaFin' => 'required',
-            'Dias' => 'required|array',
-        ], [
-            'clave.required' => 'La Clave es obligatoria.',
-            'clave.regex' => 'La Clave contiene caracteres especiales no permitidos.',
-            'cupo.required' => 'El Cupo es obligatorio.',
-            'cupo.numeric' => 'El Cupo solo acepta números.',
-            'cupo.between' => 'El Cupo mínimo es 15 y máximo 45.',
-            'periodo.required' => 'El Periodo es obligatorio.',
-            'periodo.regex' => 'El Periodo solo acepta letras, números y guiones.',
-            'users_id.required' => 'El Profesor es obligatorio.',
-            'materias_id.required' => 'La Materia es obligatoria.',
-            'horaInicio.required' => 'La Hora de Inicio es obligatoria.',
-            'horaFin.required' => 'La Hora de Fin es obligatoria.',
-            'Dias.required' => 'Los Días son obligatorios.',
+{
+    $request->validate([
+        'clave' => 'required|regex:/^[A-Za-z0-9-]+$/',
+        'cupo' => 'required|numeric|between:15,45',
+        'periodo' => 'required|regex:/^[A-Za-z0-9-]+$/',
+        'users_id' => 'required',
+        'materias_id' => 'required',
+        'horaInicio' => 'required',
+        'horaFin' => 'required',
+        'Dias' => 'required|array',
+    ], [
+        'clave.required' => 'La Clave es obligatoria.',
+        'clave.regex' => 'La Clave contiene caracteres especiales no permitidos.',
+        'cupo.required' => 'El Cupo es obligatorio.',
+        'cupo.numeric' => 'El Cupo solo acepta números.',
+        'cupo.between' => 'El Cupo mínimo es 15 y máximo 45.',
+        'periodo.required' => 'El Periodo es obligatorio.',
+        'periodo.regex' => 'El Periodo solo acepta letras, números y guiones.',
+        'users_id.required' => 'El Profesor es obligatorio.',
+        'materias_id.required' => 'La Materia es obligatoria.',
+        'horaInicio.required' => 'La Hora de Inicio es obligatoria.',
+        'horaFin.required' => 'La Hora de Fin es obligatoria.',
+        'Dias.required' => 'Los Días son obligatorios.',
+    ]);
+
+    $grupo->update($request->all());
+    Horario::where('grupos_id', $grupo->id)->delete();
+
+    foreach ($request->Dias as $dia) {
+        Horario::create([
+            'horaInicio' => $request->horaInicio,
+            'horaFin' => $request->horaFin,
+            'dias_id' => $dia,
+            'grupos_id' => $grupo->id
         ]);
-
-        $grupo->update($request->all());
-        Horario::where('grupos_id', $grupo->id)->delete();
-
-        foreach ($request->Dias as $dia) {
-            Horario::create([
-                'horaInicio' => $request->horaInicio,
-                'horaFin' => $request->horaFin,
-                'dias_id' => $dia,
-                'grupos_id' => $grupo->id
-            ]);
-        }
-
-        // Enviar notificación por correo
-        $profesor = User::find($request->users_id);
-        $materia = Materia::find($request->materias_id);
-        Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia));
-
-        return redirect()->route('grupos.index');
     }
+
+    // Enviar notificación por correo
+    $profesor = User::find($request->users_id);
+    $materia = Materia::find($request->materias_id);
+    Mail::to($profesor->email)->send(new GroupAssigned($profesor, $grupo, $materia, $request->horaInicio, $request->horaFin, $request->Dias));
+
+    return redirect()->route('grupos.index');
+}
+
 
     public function destroy(Grupo $grupo)
     {
