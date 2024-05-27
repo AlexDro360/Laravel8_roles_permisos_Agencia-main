@@ -48,43 +48,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sexo">Sexo</label><span class="required text-danger">*</span>
-                                    {!! Form::select('sexo', $sexo=collect(['Masculino', 'Femenino', 'Otro']), [], array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="curp">CURP</label><span class="required text-danger">*</span>
-                                    {!! Form::text('curp', null, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="numero_tarjeta">Número de Tarjeta</label><span class="required text-danger">*</span>
                                     {!! Form::text('numero_tarjeta', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="email">Correo electronico</label><span class="required text-danger">*</span>
-                                    {!! Form::text('email', null, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="roles">Roles</label><span class="required text-danger">*</span>
-                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

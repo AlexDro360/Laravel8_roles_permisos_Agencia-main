@@ -10,10 +10,12 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            @can('crear-rol')
                             <a class="btn btn-warning" href="{{ route('roles.create') }}" title="Crear nuevo rol">Nuevo rol</a>
                         <div>
                             <br>
                         </div>
+                        @endcan
                         {{-- @can('crear-rol')
                         <a class="btn btn-warning" href="{{ route('roles.create') }}">Nuevo</a>
                         @endcan

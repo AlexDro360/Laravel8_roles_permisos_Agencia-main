@@ -32,8 +32,8 @@ class GroupAssigned extends Mailable
         $this->periodo = $periodo;
 
         // Fetch the day names from the Dia model assuming $dias contains day IDs
-        // $dayNames = Dia::whereIn('id', $dias)->pluck('nombre')->toArray();
-        // $this->dias = implode(', ', $dayNames); // Convert array to string
+         $dayNames = Dia::whereIn('id', $dias)->pluck('nombre')->toArray();
+         $this->dias = implode(', ', $dayNames); // Convert array to string
     }
 
     public function build()

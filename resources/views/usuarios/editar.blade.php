@@ -86,21 +86,6 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="password">Contraseña</label><span class="required text-danger">*</span>
-                                    {!! Form::password('password', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="confirm-password">Confirmar contraseña</label><span class="required text-danger">*</span>
-                                    {!! Form::password('confirm-password', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <button type="submit" class="btn btn-warning">Guardar</button>
                                 <a href="/usuarios" class="btn btn-primary">Cancelar</a>

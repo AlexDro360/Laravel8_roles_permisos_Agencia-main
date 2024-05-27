@@ -77,12 +77,6 @@
                                     {!! Form::text('email', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="roles">Roles</label><span class="required text-danger">*</span>
-                                    {!! Form::select('roles[]', $roles=collect(['Profesor']), [], array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
                         </div>
 
                         <div class="row">

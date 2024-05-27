@@ -19,14 +19,14 @@ class SeederTablaUsuarios extends Seeder
         ]);
         for ($i = 1; $i <=5; $i++) {
             DB::table('users')->insert([
-                'name' => 'Pedro'.($i+1),
-                'apellidoP' => 'Marin' . ($i + 1),
-                'apellidoM' => 'Mar' . ($i + 1),
+                'name' => 'Pedro'.($i),
+                'apellidoP' => 'Marin',
+                'apellidoM' => 'Mar',
                 'sexo' => '0',
-                'numero_tarjeta' => '121234345656787' . ($i + 1),
-                'curp' => 'BALG040506HOCFTHR' . ($i + 1),
-                'email' => 'profesor' . ($i + 1) . '@gmail.com',
-                'password' => Hash::make('123456789' . ($i + 1)),
+                'numero_tarjeta' => '121234345656787' . ($i),
+                'curp' => 'BALG040506HOCFTHR' . ($i),
+                'email' => 'profesor' . ($i) . '@gmail.com',
+                'password' => Hash::make('123456789'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -39,14 +39,14 @@ class SeederTablaUsuarios extends Seeder
         
         for ($i = 1; $i <=5; $i++) {
             DB::table('users')->insert([
-                'name' => 'Uriana'.($i+1),
-                'apellidoP' => 'Salomar' . ($i + 1),
-                'apellidoM' => 'Furete' . ($i + 1),
+                'name' => 'Uriana'.($i),
+                'apellidoP' => 'Salomar',
+                'apellidoM' => 'Furete',
                 'sexo' => '1',
-                'numero_tarjeta' => '521234345656787' . ($i + 1),
-                'curp' => 'IIGR040506HOCFTHR' . ($i + 1),
-                'email' => 'secretaria' . ($i + 1) . '@gmail.com',
-                'password' => Hash::make('123456789' . ($i + 1)),
+                'numero_tarjeta' => '521234345656787' . ($i),
+                'curp' => 'IIGR040506HOCFTHR' . ($i),
+                'email' => 'secretaria' . ($i) . '@gmail.com',
+                'password' => Hash::make('123456789'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

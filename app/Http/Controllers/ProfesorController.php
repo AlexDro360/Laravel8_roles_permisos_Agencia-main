@@ -65,7 +65,6 @@ class ProfesorController extends Controller
             'numero_tarjeta' => 'required|size:16|alpha_num|unique:users,numero_tarjeta',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password|min:8',
-            'roles' => 'required'
         ], [
             'name.required' => 'El Nombre es obligatorio.',
             'name.regex' => 'El Nombre solo puede contener letras y espacio.',
@@ -87,7 +86,6 @@ class ProfesorController extends Controller
             'password.required' => 'La Contraseña es obligatorio.',
             'password.min' => 'La contraseña debe de tener minimo 8 caracteres',
             'password.same' => 'Las Contraseñas no coinciden.',
-            'roles.required' => 'El Role es obligatorio.'
         ]);
 
         $input = $request->all();
@@ -140,20 +138,8 @@ class ProfesorController extends Controller
         'name' => 'required|regex:/^[A-Za-zÁÉÍÓÚáéíóúüÜñÑ ]+$/',
         'apellidoP' => 'required|alpha',
         'apellidoM' => 'required|alpha',
-        'sexo' => 'required',
-        'curp' => [
-            'required',
-            'regex:/^[A-ZÑ]{4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|B[CS]|C[LSCMH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[TLE]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NÑP-TV-Z]{3}[A-ZÑ0-9]\d{1}+$/',
-            Rule::unique('users')->ignore($id)
-        ],
         'numero_tarjeta' => ['required','size:16','alpha_num',Rule::unique('users')->ignore($id)],
-        'email' => [
-            'required',
-            'email',
-            Rule::unique('users')->ignore($id)
-        ],
-        'password' => 'required|same:confirm-password|min:8',
-        'roles' => 'required'
+        'password' => 'sometimes|nullable|same:confirm-password|min:8',
     ], [
         'name.required' => 'El Nombre es obligatorio.',
         'name.regex' => 'El Nombre solo puede contener letras y espacio.',
@@ -161,21 +147,12 @@ class ProfesorController extends Controller
         'apellidoP.alpha' => 'El Apellido Paterno solo puede contener letras.',
         'apellidoM.required' => 'El Apellido Materno es obligatorio.',
         'apellidoM.alpha' => 'El Apellido Materno solo puede contener letras.',
-        'sexo.required' => 'El Sexo es obligatorio.',
-        'curp.required' => 'La CURP es obligatoria.',
-        'curp.regex' => 'CURP inválida.',
-        'curp.unique' => 'Esta CURP ya está en uso.',
         'numero_tarjeta.required' => 'El Número de Tarjeta es obligatorio.',
         'numero_tarjeta.alpha_num' => 'El Número de Tarjeta solo puede contener letras y números.',
         'numero_tarjeta.size' => 'El Número de tarjeta debe tener exactamente 16 caracteres.',
         'numero_tarjeta.unique' => 'Número de tarjeta existente.',
-        'email.required' => 'El Email es obligatorio.',
-        'email.email' => 'El Email debe ser una dirección de correo válida.',
-        'email.unique' => 'El Email ya está en uso.',
-        'password.required' => 'La Contraseña es obligatorio.',
         'password.min' => 'La contraseña debe de tener mínimo 8 caracteres.',
         'password.same' => 'Las Contraseñas no coinciden.',
-        'roles.required' => 'El Rol es obligatorio.'
     ]);
 
     // Obtener todos los datos del formulario

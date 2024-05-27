@@ -33,7 +33,9 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
+     
                         <div class="form-group col-sm-6">
                             <label>Correo electronico:</label><span class="required text-danger">*</span>
                             <input type="text" name="email" id="pfEmail" class="form-control" required tabindex="3">
