@@ -17,28 +17,44 @@ class SeederTablaMaterias extends Seeder
      */
     public function run()
     {
-        $materias = [
+        $materiasC = [
             'Calculo Diferencial',
+            'Calculo Integral',
+            'Probabilidad y estadística',
+            'Ecuaciones diferenciales',
+            'Matematicas discretas'
+        ];
+        $materiasS = [
             'Fundamentos de programación',
             'Administracion de Base de datos',
             'Taller de Sistemas Operativos',
-            'Ingenieria de Software',
             'Lenguaje de Interfaz',
             'Graficación',
             'Lenguajes y Automatas',
             'Redes de Computadoras',
-            'Sistemas Operativos'
         ];
 
         $clave = 1000;
 
-        foreach($materias as $permiso) {
+        foreach($materiasC as $permiso) {
             DB::table('materias')->insert(['nombre'=>$permiso,
             'clave'=>'SCB'.($clave),
             'creditos'=>'5',
             'num_unidades'=>'5',
             'estado'=>'1',
             'departamentos_id'=>'1',
+            'created_at' => now(),
+            'updated_at' => now()
+            ]);
+            $clave++;
+        }
+        foreach($materiasS as $permiso) {
+            DB::table('materias')->insert(['nombre'=>$permiso,
+            'clave'=>'SCB'.($clave),
+            'creditos'=>'5',
+            'num_unidades'=>'5',
+            'estado'=>'1',
+            'departamentos_id'=>'2',
             'created_at' => now(),
             'updated_at' => now()
             ]);
