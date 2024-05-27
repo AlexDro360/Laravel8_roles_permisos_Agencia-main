@@ -59,6 +59,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="departamentos_id">Departamento</label><span class="required text-danger">*</span>
+                                        {!! Form::select('departamentos_id', $departamentos,$materia->departamentos_id, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="estado">Estado</label>
                                         {!! Form::select('estado', $estado=collect([true => 'Activo', false => 'Inactivo']), $materia->estado, ['class' => 'form-control']) !!}
                                     </div>

@@ -56,6 +56,13 @@
                                 </div>
 
                                 <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                            <label for="departamentos_id">Departamento</label><span class="required text-danger">*</span>
+                                            {!! Form::select('departamentos_id', $departamentos,[], array('class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="estado">Estado</label><span class="required text-danger">*</span>

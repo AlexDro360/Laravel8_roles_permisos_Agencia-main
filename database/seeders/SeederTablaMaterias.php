@@ -38,6 +38,7 @@ class SeederTablaMaterias extends Seeder
             'creditos'=>'5',
             'num_unidades'=>'5',
             'estado'=>'1',
+            'departamentos_id'=>'1',
             'created_at' => now(),
             'updated_at' => now()
             ]);

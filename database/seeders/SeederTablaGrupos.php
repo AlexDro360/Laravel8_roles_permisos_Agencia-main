@@ -28,9 +28,9 @@ class SeederTablaGrupos extends Seeder
             Grupo::create([
                 'clave'=>'6SA',
                 'cupo' =>'30',
-                'periodo' => $periodo.'-A',
                 'users_id' => $profesor->id,
                 'materias_id' => $materia,
+                'periodos_id'=> '1',
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
@@ -43,14 +43,28 @@ class SeederTablaGrupos extends Seeder
             Grupo::create([
                 'clave'=>'6SA',
                 'cupo' =>'30',
-                'periodo' => $periodo.'-A',
                 'users_id' => $profesor->id,
                 'materias_id' => $materia,
+                'periodos_id'=> '1',
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
             $periodo--;
             $materia++;
+        }
+
+        foreach($profesores as $profesor) {
+            $periodo--;
+            $materia--;
+            Grupo::create([
+                'clave'=>'6SA',
+                'cupo' =>'30',
+                'users_id' => $profesor->id,
+                'materias_id' => $materia,
+                'periodos_id'=> '2',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
         }
 
         $hora = 7;

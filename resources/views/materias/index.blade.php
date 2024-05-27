@@ -15,11 +15,29 @@
                         <a class="btn btn-warning" href="{{ route('materias.create') }}">Nueva Materia</a>
                         @endcan
 
+                        <form action="{{ route('materias.index') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br/>
+                                    <div class="form-group">
+                                        {!! Form::select('departamento', $departamentos,$dep, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <br/>
+                                    <button type="submit" class="btn btn-warning">Filtrar</button>
+                                    <br/>
+                                </div>
+                            </div>
+                        </form>
+
                         <table class="table table-striped mt-2 table_id" id="miTabla">
                                 <thead style="background-color:#ffa426">
                                     <th style="display: none;">ID</th>
                                     <th style="color:#fff;">Nombre</th>
                                     <th style="color:#fff;">Clave</th>
+                                    <th style="color:#fff;">Departamento</th>
                                     <th style="color:#fff;">Creditos</th>
                                     <th style="color:#fff;">Unidades</th>
                                     <th style="color:#fff;">Estado</th>
@@ -35,6 +53,7 @@
                                 <td style="display: none;">{{ $materia->id }}</td>
                                 <td>{{ $materia->nombre }}</td>
                                 <td>{{ $materia->clave }}</td>
+                                <td>{{ $materia->nombreD }}</td>
                                 <td>{{ $materia->creditos }}</td>
                                 <td>{{ $materia->num_unidades }}</td>
                                 @if($materia->estado)
@@ -91,6 +110,7 @@
         { Id: 'Id' },
         { Nombre: 'Nombre' },
         { Clave: 'Clave' },
+        { Departamento: 'Departamento' },
         { Creditos: 'Creditos' },
         { Unidades: 'Num_unidades' },
         { Estado: 'Estado' },
