@@ -34,7 +34,7 @@
                                   <th style="color:#fff;">Apellido Materno</th>
                                   <th style="color:#fff;">CURP</th>
                                   <th style="color:#fff;">Correo electronico</th>
-                                  <th style="color:#fff;">Rol</th>
+                                <!--  <th style="color:#fff;">Rol</th>-->
                                   <th style="color:#fff;">Acciones</th>
                               </thead>
                               <tbody>
@@ -46,12 +46,12 @@
                                     <td>{{ $usuario->apellidoM }}</td>
                                     <td>{{ $usuario->curp }}</td>
                                     <td>{{ $usuario->email }}</td>
-                                    <td>
+                                   <!-- <td>
                                       @if(!empty($usuario->getRoleNames()))
                                         @foreach($usuario->getRoleNames() as $rolNombre)
                                           <h5><span class="badge badge-dark">{{ $rolNombre }}</span></h5>
                                         @endforeach
-                                      @endif
+                                      @endif-->
                                     </td>
 
                                     <td>
@@ -93,7 +93,7 @@
         { ApellidoM: 'Apellido Materno' },
         { CURP: 'curp' },
         { Email: 'E-mail' },
-        { Rol: 'Rol' },
+      //  { Rol: 'Rol' },
         { Acciones: 'Acciones' }
     ],
 

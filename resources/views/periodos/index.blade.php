@@ -25,6 +25,12 @@
                                     <th style="color:#fff;">Acciones</th>
                               </thead>
                               <tbody>
+                            <!-- @php
+                                use App\Models\Grupo;
+                            @endphp -->
+                            @php
+                                use App\Models\Periodo;
+                            @endphp
                             @foreach ($periodos as $periodo)
                             <tr>
                                 <td style="display: none;">{{ $periodo->id }}</td>
@@ -42,11 +48,14 @@
                                         <a class="btn btn-info" href="{{ route('periodos.edit',$periodo->id) }}">Editar</a>
                                         {{-- @endcan --}}
 
-                                        @csrf
-                                        @method('DELETE')
-                                        {{-- @can('borrar-periodo') --}}
-                                        <button type="submit" class="btn btn-danger">Borrar</button>
-                                        {{-- @endcan --}}
+                                        
+                                        @if($periodo->estado == false)
+                                            @csrf
+                                            @method('DELETE')
+                                            {{-- @can('borrar-periodo') --}}
+                                            <button type="submit" class="btn btn-danger">Borrar</button>
+                                            {{-- @endcan --}}
+                                        @endif
                                     </form>
                                 </td>
                             </tr>

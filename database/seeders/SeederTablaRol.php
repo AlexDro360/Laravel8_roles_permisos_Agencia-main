@@ -17,10 +17,10 @@ class SeederTablaRol extends Seeder
             // Puedes agregar más roles si es necesario
         ]);
         DB::table('role_has_permissions')->insert([
-            ['permission_id'=>'17',
+            ['permission_id'=>'21',
             'role_id'=>'1']
         ]);
-        for($x=5;$x<=16;$x++){
+        for($x=5;$x<=20;$x++){
                 DB::table('role_has_permissions')->insert([
                     ['permission_id'=>$x,
                     'role_id'=>'2']
