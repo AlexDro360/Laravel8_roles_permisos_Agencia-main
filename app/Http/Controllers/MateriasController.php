@@ -9,6 +9,13 @@ use Illuminate\Validation\Rule;
 
 class MateriasController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-materia|crear-materia|editar-materia|borrar-materia', ['only' => ['index']]);
+         $this->middleware('permission:crear-materia', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-materia', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-materia', ['only' => ['destroy']]);
+    }
     public function index(Request $request)
     {
         $dep = $request->departamento;

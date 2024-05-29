@@ -20,6 +20,13 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+         $this->middleware('permission:ver-usuario|crear-usuario|editar-usuario|borrar-usuario', ['only' => ['index']]);
+         $this->middleware('permission:crear-usuario', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-usuario', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-usuario', ['only' => ['destroy']]);
+    }
     public function index(Request $request)
     {      
         //Sin paginación

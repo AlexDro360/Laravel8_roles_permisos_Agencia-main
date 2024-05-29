@@ -18,6 +18,13 @@ use Illuminate\Support\Arr;
 
 class GrupoController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-grupo|crear-grupo|editar-grupo|borrar-grupo', ['only' => ['index']]);
+         $this->middleware('permission:crear-grupo', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-grupo', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-grupo', ['only' => ['destroy']]);
+    }
     public function index(Request $request)
     {
         $periodo = $request->get('periodo');

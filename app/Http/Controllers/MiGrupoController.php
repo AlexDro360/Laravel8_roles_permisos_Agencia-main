@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Auth;
 
 class MiGrupoController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:mi-grupo', ['only' => ['index']]);
+    }
     public function index()
     {
         $userId = Auth::id(); // Obtenemos la ID del usuario autenticado

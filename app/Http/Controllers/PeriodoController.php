@@ -10,6 +10,13 @@ use Carbon\Carbon;
 class PeriodoController extends Controller
 {
     //
+    function __construct()
+    {
+         $this->middleware('permission:ver-periodo|crear-periodo|editar-perido|borrar-periodo', ['only' => ['index']]);
+         $this->middleware('permission:crear-periodo', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-periodo', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-periodo', ['only' => ['destroy']]);
+    }
     public function index()
     {
          $periodos=Periodo::all();
